@@ -14,7 +14,7 @@ WHERE o.ONAME = 'Compatibility Tools Group'
              JOIN OFFICE o2 ON e2.OFFICEID = o2.OFFICEID
     WHERE o2.ONAME = 'Compatibility Tools Group'
 )
-ORDER BY e.ENAME ASC;
+ORDER BY e.ENAME;
 Spool off
 
 /*Query 2*/
@@ -29,7 +29,7 @@ WHERE o.ONAME = 'Compatibility Tools Group'
              JOIN OFFICE o2 ON e2.OFFICEID = o2.OFFICEID
     WHERE o2.ONAME = 'Compatibility Tools Group'
 )
-ORDER BY e.ENAME ASC;
+ORDER BY e.ENAME;
 Spool off
 
 /*Query 3*/
@@ -44,15 +44,14 @@ Spool off
 
 /*Query 4*/
 Spool result4.lst
-SELECT o.PCATEGORY, AVG(COUNT) AS HEAD_COUNT
-FROM (
-         SELECT PCATEGORY, COUNT(ENGINEERID) AS COUNT
-         FROM PROJECT
-                  NATURAL JOIN RESEARCH
-         GROUP BY PCATEGORY
-     ) o
-GROUP BY o.PCATEGORY
-ORDER BY o.PCATEGORY DESC;
+SELECT PCATEGORY, AVG(HEAD)
+FROM
+    (SELECT PROJECTID, COUNT(ENGINEERID) AS HEAD
+     FROM RESEARCH
+              NATURAL JOIN PROJECT
+     GROUP BY PROJECTID)
+        NATURAL JOIN PROJECT
+GROUP BY PCATEGORY;
 Spool off
 
 /*Query 5*/
