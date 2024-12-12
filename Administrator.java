@@ -1,10 +1,12 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
-import java.util.Scanner;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
-public class Administrator {
+public class Administrator extends User {
     private Connection conn;
     private Scanner scanner;
     
@@ -22,10 +24,8 @@ public class Administrator {
             System.out.println("3. Load from datafile");
             System.out.println("4. Show content of a table");
             System.out.println("5. Return to the main menu");
-            System.out.print("Enter Your Choice: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            int choice = Console.readInt("Enter Your Choice: ", 1, 5);
 
             switch (choice) {
                 case 1:
@@ -42,8 +42,6 @@ public class Administrator {
                     break;
                 case 5:
                     return;
-                default:
-                    System.out.println("Invalid choice! Please try again.");
             }
         }
     }
@@ -384,5 +382,10 @@ public class Administrator {
         } catch (SQLException e) {
             System.out.println("Error showing table content: " + e.getMessage());
         }
+    }
+
+    @Override
+    public void printMenu() {
+
     }
 }

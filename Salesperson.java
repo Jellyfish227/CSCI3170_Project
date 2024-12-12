@@ -1,7 +1,10 @@
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
-public class Salesperson {
+public class Salesperson extends User {
     private Connection conn;
     private Scanner scanner;
 
@@ -168,4 +171,9 @@ public class Salesperson {
             System.out.println("Error performing transaction: " + e.getMessage());
         }
     }
-} 
+
+    @Override
+    public void printMenu() {
+
+    }
+}

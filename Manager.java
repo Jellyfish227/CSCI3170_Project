@@ -1,11 +1,11 @@
 import java.sql.*;
 import java.util.Scanner;
 
-public class Manager {
+public class Manager extends User {
     private Connection conn;
     private Scanner scanner;
 
-    public Manager(Connection conn) {
+    public Manager(Connection conn){
         this.conn = conn;
         this.scanner = new Scanner(System.in);
     }
@@ -183,4 +183,9 @@ public class Manager {
             System.out.println("Error showing popular parts: " + e.getMessage());
         }
     }
-} 
+
+    @Override
+    public void printMenu() {
+
+    }
+}
