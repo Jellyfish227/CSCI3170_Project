@@ -232,7 +232,7 @@ public class Administrator {
     }
 
     private void loadPart(String folderPath) throws IOException, SQLException {
-        // 首先檢查所有 manufacturer ID 是否存在
+        // First check if all manufacturer IDs exist
         Set<Integer> validManufacturerIds = new HashSet<>();
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT mID FROM manufacturer")) {
@@ -241,7 +241,7 @@ public class Administrator {
             }
         }
 
-        // 檢查所有 category ID 是否存在
+        // Check if all category IDs exist
         Set<Integer> validCategoryIds = new HashSet<>();
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT cID FROM category")) {
@@ -261,7 +261,7 @@ public class Administrator {
                 lineNumber++;
                 String[] data = line.split("\t");
                 try {
-                    // 驗證數據格式
+                    // Validate data format
                     int partId = Integer.parseInt(data[0]);
                     if (partId <= 0 || partId > 999) {
                         System.out.println("Error in line " + lineNumber + ": Part ID must be between 1 and 999");
@@ -298,7 +298,7 @@ public class Administrator {
                         continue;
                     }
 
-                    // 檢查外鍵約束
+                    // Check foreign key constraints
                     if (!validManufacturerIds.contains(mID)) {
                         System.out.println("Error in line " + lineNumber + ": Invalid manufacturer ID " + mID);
                         System.out.println("Valid manufacturer IDs are: " + validManufacturerIds);
@@ -310,7 +310,7 @@ public class Administrator {
                         continue;
                     }
 
-                    // 插入數據
+                    // Insert data
                     stmt.setInt(1, partId);        // Part ID
                     stmt.setString(2, data[1]);    // Part Name
                     stmt.setInt(3, price);         // Part Price
