@@ -1,0 +1,4 @@
+@echo off
+javac -cp ojdbc8.jar *.java
+java -cp ".;.\ojdbc8.jar" Main
+pause 
