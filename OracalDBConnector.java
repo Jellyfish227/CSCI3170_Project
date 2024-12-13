@@ -1,20 +1,20 @@
-import com.sun.jdi.connect.Connector;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnector implements AutoCloseable {
+public class OracalDBConnector implements Connectable {
     // Database credentials for CUHK CSE Oracle server
     private static final String DB_URL = "jdbc:oracle:thin:@db18.cse.cuhk.edu.hk:1521/oradb.cse.cuhk.edu.hk";
     private static final String USERNAME = "h086";
     private static final String PASSWORD = "DilAkJay";
+
     private Connection conn = null;
 
-    public DatabaseConnector() {
+    public OracalDBConnector() {
         this.conn = setConnection();
     }
 
+    @Override
     private Connection setConnection() {
         if (conn == null) {
             try {

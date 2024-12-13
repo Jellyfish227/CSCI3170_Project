@@ -5,15 +5,16 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Salesperson extends User {
-    private Connection conn;
+    private Connectable db;
     private Scanner scanner;
 
-    public Salesperson(Connection conn) {
-        this.conn = conn;
+    public Salesperson(Connectable db) {
+        this.db = db;
         this.scanner = new Scanner(System.in);
     }
 
-    public void showMenu() {
+    @Override
+    public void executeMenu() {
         while (true) {
             System.out.println("\n-----Operations for salesperson menu-----");
             System.out.println("What kinds of operation would you like to perform?");
@@ -22,10 +23,7 @@ public class Salesperson extends User {
             System.out.println("3. Return to the main menu");
             System.out.print("Enter Your Choice: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-
-
+            int choice = Console.readInt("Enter Your Choice: ", 1, 3);
             switch (choice) {
                 case 1:
                     searchParts();
@@ -35,8 +33,6 @@ public class Salesperson extends User {
                     break;
                 case 3:
                     return;
-                default:
-                    System.out.println("Invalid choice! Please try again.");
             }
         }
     }
@@ -46,7 +42,7 @@ public class Salesperson extends User {
         System.out.println("1. Part Name");
         System.out.println("2. Manufacturer Name");
         System.out.print("Choose the search criterion: ");
-        
+
         int criterion = scanner.nextInt();
         scanner.nextLine(); // Consume newline
 
@@ -57,32 +53,32 @@ public class Salesperson extends User {
         System.out.println("1. By price, ascending order");
         System.out.println("2. By price, descending order");
         System.out.print("Choose the search criterion: ");
-        
+
         int ordering = scanner.nextInt();
         scanner.nextLine(); // Consume newline
 
         try {
             // First check if manufacturer exists
             String checkSql = "SELECT mID, mName FROM manufacturer WHERE LOWER(mName) LIKE LOWER(?)";
-            PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+            PreparedStatement checkStmt = db.prepareStatement(checkSql);
             checkStmt.setString(1, "%" + keyword + "%");
             ResultSet checkRs = checkStmt.executeQuery();
-            
+
             System.out.println("\nMatching manufacturers:");
             while (checkRs.next()) {
-                System.out.printf("Found manufacturer: ID=%d, Name=%s\n", 
-                    checkRs.getInt("mID"), 
+                System.out.printf("Found manufacturer: ID=%d, Name=%s\n",
+                    checkRs.getInt("mID"),
                     checkRs.getString("mName"));
             }
 
-            String sql = 
+            String sql =
                 "SELECT p.pID as ID, p.pName as Name, m.mName as Manufacturer, " +
                 "c.cName as Category, p.pAvailableQuantity as Quantity, " +
                 "p.pWarrantyPeriod as Warranty, p.pPrice as Price " +
                 "FROM part p " +
                 "JOIN manufacturer m ON p.mID = m.mID " +
                 "JOIN category c ON p.cID = c.cID " +
-                "WHERE " + (criterion == 1 ? "LOWER(p.pName)" : "LOWER(m.mName)") + 
+                "WHERE " + (criterion == 1 ? "LOWER(p.pName)" : "LOWER(m.mName)") +
                 " LIKE LOWER(?) " +
                 "ORDER BY p.pPrice " + (ordering == 1 ? "ASC" : "DESC");
 
@@ -90,7 +86,7 @@ public class Salesperson extends User {
             System.out.println("Debug - SQL: " + sql);
             System.out.println("Debug - Keyword: " + keyword);
 
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            PreparedStatement pstmt = db.prepareStatement(sql);
             pstmt.setString(1, "%" + keyword + "%");
             ResultSet rs = pstmt.executeQuery();
 
@@ -123,79 +119,53 @@ public class Salesperson extends User {
     private void sellPart() {
         System.out.print("Enter The Part ID: ");
         int partId = scanner.nextInt();
-        
+
         System.out.print("Enter The Salesperson ID: ");
         int salespersonId = scanner.nextInt();
         scanner.nextLine(); // Consume newline
 
         try {
             // Start transaction
-            conn.setAutoCommit(false);
+            db.setAutoCommit(false);
 
             // Check part availability
             String checkSql = "SELECT pName, pAvailableQuantity FROM part WHERE pID = ?";
-            PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+            PreparedStatement checkStmt = db.prepareStatement(checkSql);
             checkStmt.setInt(1, partId);
             ResultSet rs = checkStmt.executeQuery();
 
             if (rs.next() && rs.getInt("pAvailableQuantity") > 0) {
                 // Update part quantity
                 String updateSql = "UPDATE part SET pAvailableQuantity = pAvailableQuantity - 1 WHERE pID = ?";
-                PreparedStatement updateStmt = conn.prepareStatement(updateSql);
+                PreparedStatement updateStmt = db.prepareStatement(updateSql);
                 updateStmt.setInt(1, partId);
                 updateStmt.executeUpdate();
 
                 // Create transaction record
                 String insertSql = "INSERT INTO transaction (tID, pID, sID, tDate) " +
                                  "VALUES ((SELECT NVL(MAX(tID), 0) + 1 FROM transaction), ?, ?, SYSDATE)";
-                PreparedStatement insertStmt = conn.prepareStatement(insertSql);
+                PreparedStatement insertStmt = db.prepareStatement(insertSql);
                 insertStmt.setInt(1, partId);
                 insertStmt.setInt(2, salespersonId);
                 insertStmt.executeUpdate();
 
-                conn.commit();
-                System.out.println("Product: " + rs.getString("pName") + "(id: " + partId + 
+                db.commit();
+                System.out.println("Product: " + rs.getString("pName") + "(id: " + partId +
                                  ") Remaining Quantity: " + (rs.getInt("pAvailableQuantity") - 1));
             } else {
                 System.out.println("Error: Part not available!");
-                conn.rollback();
+                db.rollback();
             }
 
-            conn.setAutoCommit(true);
+            db.setAutoCommit(true);
         } catch (SQLException e) {
             try {
-                conn.rollback();
-                conn.setAutoCommit(true);
+                db.rollback();
+                db.setAutoCommit(true);
             } catch (SQLException ex) {
                 System.out.println("Error rolling back transaction: " + ex.getMessage());
             }
             System.out.println("Error performing transaction: " + e.getMessage());
-        }
-    }
-
-    @Override
-    public void executeMenu() {
-        while (true) {
-            System.out.println("\n-----Operations for salesperson menu-----");
-            System.out.println("What kinds of operation would you like to perform?");
-            System.out.println("1. Search for parts");
-            System.out.println("2. Sell a part");
-            System.out.println("3. Return to the main menu");
-            System.out.print("Enter Your Choice: ");
-
-            int choice = Console.readInt("Enter Your Choice: ", 1, 3);
-            scanner.nextLine(); // Consume newline
-
-            switch (choice) {
-                case 1:
-                    searchParts();
-                    break;
-                case 2:
-                    sellPart();
-                    break;
-                case 3:
-                    return;
-            }
         }
     }
 

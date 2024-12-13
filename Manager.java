@@ -2,15 +2,16 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Manager extends User {
-    private Connection conn;
+    private Connectable db;
     private Scanner scanner;
 
-    public Manager(Connection conn){
-        this.conn = conn;
+    public Manager(Connectable db){
+        this.db = db;
         this.scanner = new Scanner(System.in);
     }
 
-    public void showMenu() {
+    @Override
+    public void executeMenu() {
         while (true) {
             System.out.println("\n-----Operations for manager menu-----");
             System.out.println("What kinds of operation would you like to perform?");
@@ -21,8 +22,7 @@ public class Manager extends User {
             System.out.println("5. Return to the main menu");
             System.out.print("Enter Your Choice: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            int choice = Console.readInt("Enter Your Choice: ", 1, 5);
 
             switch (choice) {
                 case 1:
@@ -39,8 +39,6 @@ public class Manager extends User {
                     break;
                 case 5:
                     return;
-                default:
-                    System.out.println("Invalid choice! Please try again.");
             }
         }
     }
@@ -60,7 +58,7 @@ public class Manager extends User {
                         "FROM salesperson ORDER BY sExperience " + 
                         (ordering == 1 ? "ASC" : "DESC");
 
-            Statement stmt = conn.createStatement();
+            Statement stmt = db.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
             // Print headers
@@ -97,7 +95,7 @@ public class Manager extends User {
                         "GROUP BY s.sID, s.sName, s.sExperience " +
                         "ORDER BY s.sID DESC";
 
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            PreparedStatement pstmt = db.prepareStatement(sql);
             pstmt.setInt(1, lowerBound);
             pstmt.setInt(2, upperBound);
             ResultSet rs = pstmt.executeQuery();
@@ -131,7 +129,7 @@ public class Manager extends User {
                         "GROUP BY m.mID, m.mName " +
                         "ORDER BY \"Total Sales Value\" DESC";
 
-            Statement stmt = conn.createStatement();
+            Statement stmt = db.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
             System.out.println("| Manufacturer ID | Manufacturer Name | Total Sales Value |");
@@ -164,7 +162,7 @@ public class Manager extends User {
                         "ORDER BY transaction_count DESC " +
                         "FETCH FIRST ? ROWS ONLY";
 
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            PreparedStatement pstmt = db.prepareStatement(sql);
             pstmt.setInt(1, n);
             ResultSet rs = pstmt.executeQuery();
 
@@ -183,10 +181,4 @@ public class Manager extends User {
             System.out.println("Error showing popular parts: " + e.getMessage());
         }
     }
-
-    @Override
-    public void executeMenu() {
-
-    }
-
 }

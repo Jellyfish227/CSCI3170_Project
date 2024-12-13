@@ -1,7 +1,7 @@
 public class Main {
     public static void main(String[] args) {
         // Initialize database connection
-        try (DatabaseConnector db = new DatabaseConnector()) {
+        try (Connectable db = new OracalDBConnector()) {
             while (true) {
                 // Display welcome message and main menu
                 System.out.println("Welcome to sales system!");
@@ -15,13 +15,13 @@ public class Main {
                 int choice = Console.readInt("Enter Your Choice: ", 1, 4);
                 switch (choice) {
                     case 1:
-                        user = new Administrator(db.getConnection());
+                        user = new Administrator(db);
                         break;
                     case 2:
-                        user = new Salesperson(db.getConnection());
+                        user = new Salesperson(db);
                         break;
                     case 3:
-                        user = new Manager(db.getConnection());
+                        user = new Manager(db);
                         break;
                     case 4:
                         System.out.println("Thank you for using the sales system!");

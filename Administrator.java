@@ -7,11 +7,11 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Administrator extends User {
-    private Connection conn;
+    private Connectable db;
     private Scanner scanner;
     
-    public Administrator(Connection conn) {
-        this.conn = conn;
+    public Administrator(Connectable db) {
+        this.db = db;
         this.scanner = new Scanner(System.in);
     }
 
@@ -48,7 +48,7 @@ public class Administrator extends User {
 
     private void createTables() {
         try {
-            Statement stmt = conn.createStatement();
+            Statement stmt = db.createStatement();
             
             // Create tables with foreign key constraints
             String[] createStatements = {
@@ -84,7 +84,7 @@ public class Administrator extends User {
 
     private void deleteTables() {
         try {
-            Statement stmt = conn.createStatement();
+            Statement stmt = db.createStatement();
             
             // Use the same drop statements as in createTables()
             String[] dropStatements = {
@@ -116,9 +116,9 @@ public class Administrator extends User {
         }
         
         try {
-            conn.setAutoCommit(false);
+            db.setAutoCommit(false);
             
-            Statement stmt = conn.createStatement();
+            Statement stmt = db.createStatement();
             String[] deleteStatements = {
                 "DELETE FROM transaction",
                 "DELETE FROM part",
@@ -147,15 +147,15 @@ public class Administrator extends User {
                 System.out.println("Loading transactions...");
                 loadTransaction(folderPath);
 
-                conn.commit();
+                db.commit();
                 System.out.println("Data loaded successfully!");
 
             } catch (IOException e) {
-                conn.rollback();
+                db.rollback();
                 System.out.println("[Error] Failed to read data file: " + e.getMessage());
                 System.out.println("File path: " + e.getStackTrace()[0].getFileName());
             } catch (SQLException e) {
-                conn.rollback();
+                db.rollback();
                 System.out.println("[Error] Database error: " + e.getMessage());
                 System.out.println("Error code: " + e.getErrorCode());
                 if (e.getMessage().contains("integrity constraint")) {
@@ -169,7 +169,7 @@ public class Administrator extends User {
             e.printStackTrace();
         } finally {
             try {
-                conn.setAutoCommit(true);
+                db.setAutoCommit(true);
             } catch (SQLException e) {
                 System.out.println("[Error] Failed to reset auto-commit: " + e.getMessage());
             }
@@ -178,7 +178,7 @@ public class Administrator extends User {
 
     private void loadCategory(String folderPath) throws IOException, SQLException {
         try (BufferedReader reader = new BufferedReader(new FileReader(folderPath + "category.txt"))) {
-            PreparedStatement stmt = conn.prepareStatement(
+            PreparedStatement stmt = db.prepareStatement(
                 "INSERT INTO category VALUES (?, ?)"
             );
             
@@ -194,7 +194,7 @@ public class Administrator extends User {
 
     private void loadManufacturer(String folderPath) throws IOException, SQLException {
         try (BufferedReader reader = new BufferedReader(new FileReader(folderPath + "manufacturer.txt"))) {
-            PreparedStatement stmt = conn.prepareStatement(
+            PreparedStatement stmt = db.prepareStatement(
                 "INSERT INTO manufacturer VALUES (?, ?, ?, ?)"
             );
             
@@ -212,7 +212,7 @@ public class Administrator extends User {
 
     private void loadSalesperson(String folderPath) throws IOException, SQLException {
         try (BufferedReader reader = new BufferedReader(new FileReader(folderPath + "salesperson.txt"))) {
-            PreparedStatement stmt = conn.prepareStatement(
+            PreparedStatement stmt = db.prepareStatement(
                 "INSERT INTO salesperson VALUES (?, ?, ?, ?, ?)"
             );
             
@@ -232,7 +232,7 @@ public class Administrator extends User {
     private void loadPart(String folderPath) throws IOException, SQLException {
         // First check if all manufacturer IDs exist
         Set<Integer> validManufacturerIds = new HashSet<>();
-        try (Statement stmt = conn.createStatement();
+        try (Statement stmt = db.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT mID FROM manufacturer")) {
             while (rs.next()) {
                 validManufacturerIds.add(rs.getInt("mID"));
@@ -241,7 +241,7 @@ public class Administrator extends User {
 
         // Check if all category IDs exist
         Set<Integer> validCategoryIds = new HashSet<>();
-        try (Statement stmt = conn.createStatement();
+        try (Statement stmt = db.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT cID FROM category")) {
             while (rs.next()) {
                 validCategoryIds.add(rs.getInt("cID"));
@@ -249,7 +249,7 @@ public class Administrator extends User {
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(folderPath + "part.txt"))) {
-            PreparedStatement stmt = conn.prepareStatement(
+            PreparedStatement stmt = db.prepareStatement(
                 "INSERT INTO part VALUES (?, ?, ?, ?, ?, ?, ?)"
             );
             
@@ -332,7 +332,7 @@ public class Administrator extends User {
 
     private void loadTransaction(String folderPath) throws IOException, SQLException {
         try (BufferedReader reader = new BufferedReader(new FileReader(folderPath + "transaction.txt"))) {
-            PreparedStatement stmt = conn.prepareStatement(
+            PreparedStatement stmt = db.prepareStatement(
                 "INSERT INTO transaction VALUES (?, ?, ?, TO_DATE(?, 'DD/MM/YYYY'))"
             );
             
@@ -353,7 +353,7 @@ public class Administrator extends User {
         String tableName = scanner.nextLine().toLowerCase();
 
         try {
-            Statement stmt = conn.createStatement();
+            Statement stmt = db.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName);
             ResultSetMetaData metaData = rs.getMetaData();
             int columnCount = metaData.getColumnCount();
