@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
@@ -12,7 +13,8 @@ public class Administrator extends User {
         this.db = db;
     }
 
-    public void showMenu() {
+    @Override
+    public void executeMenu() {
         while (true) {
             System.out.println("\n-----Operations for administrator menu-----");
             System.out.println("What kinds of operation would you like to perform?");
@@ -107,9 +109,11 @@ public class Administrator extends User {
         String folderPath = Console.readString("Please enter the folder path: ").trim();
         
         // Ensure path ends with slash
-        if (!folderPath.endsWith("/") && !folderPath.endsWith("\\")) {
-            folderPath += "/";
+        if (!folderPath.endsWith(File.separator)) {
+            folderPath += File.separator;
         }
+
+        Table.setSourceDir(folderPath);
         
         try {
             db.setAutoCommit(false);
@@ -377,15 +381,5 @@ public class Administrator extends User {
         } catch (SQLException e) {
             System.out.println("Error showing table content: " + e.getMessage());
         }
-    }
-
-    @Override
-    public void executeMenu() {
-
-    }
-
-    @Override
-    public void executeCommand(int command) {
-
     }
 }
