@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -18,8 +22,19 @@ public class CatagoryTable extends Table {
     }
 
     @Override
-    public void loadTable() throws SQLException {
+    public void loadTable() throws SQLException, IOException {
+        System.out.println("Loading categories...");
+        try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSouceDir() + "category.txt"))) {
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO category VALUES (?, ?)");
 
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split("\t");
+                ps.setInt(1, Integer.parseInt(data[0]));
+                ps.setString(2, data[1]);
+                ps.executeUpdate();
+            }
+        }
     }
 
     @Override
