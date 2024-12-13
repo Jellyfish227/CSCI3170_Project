@@ -185,7 +185,8 @@ public class Manager extends User {
     }
 
     @Override
-    public void printMenu() {
+    public void executeMenu() {
 
     }
+
 }

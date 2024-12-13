@@ -385,7 +385,12 @@ public class Administrator extends User {
     }
 
     @Override
-    public void printMenu() {
+    public void executeMenu() {
+
+    }
+
+    @Override
+    public void executeCommand(int command) {
 
     }
 }

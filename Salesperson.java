@@ -25,6 +25,7 @@ public class Salesperson extends User {
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
+
             switch (choice) {
                 case 1:
                     searchParts();
@@ -173,7 +174,29 @@ public class Salesperson extends User {
     }
 
     @Override
-    public void printMenu() {
+    public void executeMenu() {
+        while (true) {
+            System.out.println("\n-----Operations for salesperson menu-----");
+            System.out.println("What kinds of operation would you like to perform?");
+            System.out.println("1. Search for parts");
+            System.out.println("2. Sell a part");
+            System.out.println("3. Return to the main menu");
+            System.out.print("Enter Your Choice: ");
 
+            int choice = Console.readInt("Enter Your Choice: ", 1, 3);
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    searchParts();
+                    break;
+                case 2:
+                    sellPart();
+                    break;
+                case 3:
+                    return;
+            }
+        }
     }
+
 }
