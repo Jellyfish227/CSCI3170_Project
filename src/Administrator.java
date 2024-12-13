@@ -3,16 +3,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
 
 public class Administrator extends User {
     private Connectable db;
-    private Scanner scanner;
-    
+
     public Administrator(Connectable db) {
         this.db = db;
-        this.scanner = new Scanner(System.in);
     }
 
     public void showMenu() {
@@ -107,8 +104,7 @@ public class Administrator extends User {
     }
 
     public void loadFromDatafile() {
-        System.out.print("Please enter the folder path: ");
-        String folderPath = scanner.nextLine().trim();
+        String folderPath = Console.readString("Please enter the folder path: ").trim();
         
         // Ensure path ends with slash
         if (!folderPath.endsWith("/") && !folderPath.endsWith("\\")) {
@@ -349,8 +345,7 @@ public class Administrator extends User {
     }
 
     private void showTableContent() {
-        System.out.print("Which table would you like to show: ");
-        String tableName = scanner.nextLine().toLowerCase();
+        String tableName = Console.readString("Which table would you like to show: ").toLowerCase();
 
         try {
             Statement stmt = db.createStatement();

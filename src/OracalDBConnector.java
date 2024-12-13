@@ -11,11 +11,11 @@ public class OracalDBConnector implements Connectable {
     private Connection conn = null;
 
     public OracalDBConnector() {
-        this.conn = setConnection();
+        setConnection();
     }
 
     @Override
-    private Connection setConnection() {
+    public void setConnection() {
         if (conn == null) {
             try {
                 // Register JDBC driver
@@ -31,9 +31,8 @@ public class OracalDBConnector implements Connectable {
                 System.out.println("Error: Connection failed! Check output console");
             }
         }
-        return conn;
     }
-
+    @Override
     public Connection getConnection() {
         return this.conn;
     }

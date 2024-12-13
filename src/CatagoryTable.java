@@ -8,4 +8,9 @@ public class CatagoryTable extends Table {
     public void loadTable() {
 
     }
+
+    @Override
+    public String[] queryTable(String query) {
+        return new String[0];
+    }
 }

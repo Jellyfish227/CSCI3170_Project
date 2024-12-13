@@ -7,4 +7,5 @@ public abstract class Table {
 
     public abstract void createTable();
     public abstract void loadTable();
+    public abstract String[] queryTable(String query);
 }
