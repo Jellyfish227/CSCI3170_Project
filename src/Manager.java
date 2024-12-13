@@ -1,13 +1,10 @@
 import java.sql.*;
-import java.util.Scanner;
 
 public class Manager extends User {
     private Connectable db;
-    private Scanner scanner;
 
     public Manager(Connectable db){
         this.db = db;
-        this.scanner = new Scanner(System.in);
     }
 
     @Override
@@ -47,10 +44,8 @@ public class Manager extends User {
         System.out.println("Choose ordering:");
         System.out.println("1. By ascending order");
         System.out.println("2. By descending order");
-        System.out.print("Choose the list ordering: ");
-        
-        int ordering = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+
+        int ordering = Console.readInt("Choose the list ordering: ", 1, 2);
 
         try {
             String sql = "SELECT sID as ID, sName as Name, sPhoneNumber as \"Mobile Phone\", " +
@@ -80,12 +75,9 @@ public class Manager extends User {
     }
 
     private void countTransactions() {
-        System.out.print("Type in the lower bound for years of experience: ");
-        int lowerBound = scanner.nextInt();
+        int lowerBound = Console.readInt("Type in the lower bound for years of experience: ");
         
-        System.out.print("Type in the upper bound for years of experience: ");
-        int upperBound = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        int upperBound = Console.readInt("Type in the upper bound for years of experience: ");
 
         try {
             String sql = "SELECT s.sID as ID, s.sName as Name, s.sExperience as Experience, " +
@@ -149,9 +141,7 @@ public class Manager extends User {
     }
 
     private void showPopularParts() {
-        System.out.print("Type in the number of parts: ");
-        int n = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        int n = Console.readInt("Type in the number of parts: ");
 
         try {
             String sql = "SELECT p.pID, p.pName, COUNT(t.tID) as transaction_count " +

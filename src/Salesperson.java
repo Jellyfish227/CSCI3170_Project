@@ -1,16 +1,12 @@
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 public class Salesperson extends User {
     private Connectable db;
-    private Scanner scanner;
 
     public Salesperson(Connectable db) {
         this.db = db;
-        this.scanner = new Scanner(System.in);
     }
 
     @Override
@@ -21,7 +17,6 @@ public class Salesperson extends User {
             System.out.println("1. Search for parts");
             System.out.println("2. Sell a part");
             System.out.println("3. Return to the main menu");
-            System.out.print("Enter Your Choice: ");
 
             int choice = Console.readInt("Enter Your Choice: ", 1, 3);
             switch (choice) {
@@ -41,21 +36,16 @@ public class Salesperson extends User {
         System.out.println("Choose the Search criterion:");
         System.out.println("1. Part Name");
         System.out.println("2. Manufacturer Name");
-        System.out.print("Choose the search criterion: ");
 
-        int criterion = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        int criterion = Console.readInt("Choose the search criterion: ", 1, 2);
 
-        System.out.print("Type in the Search Keyword: ");
-        String keyword = scanner.nextLine();
+        String keyword = Console.readString("Type in the Search Keyword: ");
 
         System.out.println("Choose ordering:");
         System.out.println("1. By price, ascending order");
         System.out.println("2. By price, descending order");
-        System.out.print("Choose the search criterion: ");
 
-        int ordering = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        int ordering = Console.readInt("Choose the search criterion: ", 1, 2);
 
         try {
             // First check if manufacturer exists
@@ -117,12 +107,9 @@ public class Salesperson extends User {
     }
 
     private void sellPart() {
-        System.out.print("Enter The Part ID: ");
-        int partId = scanner.nextInt();
+        int partId = Console.readInt("Enter The Part ID: ");
 
-        System.out.print("Enter The Salesperson ID: ");
-        int salespersonId = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        int salespersonId = Console.readInt("Enter The Salesperson ID: ");
 
         try {
             // Start transaction

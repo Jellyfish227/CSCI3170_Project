@@ -1,4 +1,6 @@
+import java.sql.Connection;
+
 public interface Connectable extends AutoCloseable {
     void setConnection();
-    void getConnection();
+    Connection getConnection();
 }

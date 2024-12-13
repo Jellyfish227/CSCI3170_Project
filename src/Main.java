@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        // Initialize database connection
+        // Initialize database connection by try with resources block
         try (Connectable db = new OracalDBConnector()) {
             while (true) {
                 // Display welcome message and main menu
@@ -15,7 +15,7 @@ public class Main {
                 int choice = Console.readInt("Enter Your Choice: ", 1, 4);
                 switch (choice) {
                     case 1:
-                        user = new Administrator(db);
+                        user = new Administrator(db); // Inject database dependencies into the corresponding user
                         break;
                     case 2:
                         user = new Salesperson(db);
