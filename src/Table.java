@@ -1,7 +1,8 @@
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public abstract class Table {
-    private static Connection conn;
+    protected static Connection conn;
     private static String sourceDir;
     private int columns;
 
@@ -9,7 +10,8 @@ public abstract class Table {
         Table.sourceDir = sourceDir;
     }
 
-    public abstract void createTable();
-    public abstract void loadTable();
+    public abstract void createTable() throws SQLException;
+    public abstract void deleteTable() throws SQLException;
+    public abstract void loadTable() throws SQLException;
     public abstract String[] queryTable(String query);
 }

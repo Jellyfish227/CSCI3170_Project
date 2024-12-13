@@ -11,6 +11,7 @@ public class Administrator extends User {
 
     public Administrator(Connectable db) {
         this.db = db;
+        Table.conn = db.getConnection();
     }
 
     @Override

@@ -1,11 +1,20 @@
+import java.sql.SQLException;
+
 public class PartTable extends Table {
+    public static final int COLUMNS = 7;
+
     @Override
-    public void createTable() {
+    public void createTable() throws SQLException {
 
     }
 
     @Override
-    public void loadTable() {
+    public void deleteTable() throws SQLException {
+
+    }
+
+    @Override
+    public void loadTable() throws SQLException {
 
     }
 
