@@ -7,18 +7,20 @@ import java.sql.Statement;
 
 public class TransactionTable extends Table {
     public static final int COLUMNS = 4;
+    public static String tableIdentifier;
 
     public TransactionTable(String tableName) {
         super(tableName);
+        tableIdentifier = tableName;
     }
 
     @Override
     public void createTable() throws SQLException {
         deleteTable();
         Statement stmt = conn.createStatement();
-        stmt.execute("CREATE TABLE transaction (tID INTEGER PRIMARY KEY, " +
-                "pID INTEGER REFERENCES part(pID), " +
-                "sID INTEGER REFERENCES salesperson(sID), " +
+        stmt.execute("CREATE TABLE " + tableName + " (tID INTEGER PRIMARY KEY, " +
+                "pID INTEGER REFERENCES "+ PartTable.tableIdentifier + "(pID), " +
+                "sID INTEGER REFERENCES " + SalespersonTable.tableIdentifier + "(sID), " +
                 "tDate DATE NOT NULL)");
     }
 
@@ -33,7 +35,7 @@ public class TransactionTable extends Table {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSouceDir() + "transaction.txt"))) {
             PreparedStatement stmt = conn.prepareStatement(
-                    "INSERT INTO transaction VALUES (?, ?, ?, TO_DATE(?, 'DD/MM/YYYY'))"
+                    "INSERT INTO " + tableName + " VALUES (?, ?, ?, TO_DATE(?, 'DD/MM/YYYY'))"
             );
 
             String line;

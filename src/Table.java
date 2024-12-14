@@ -5,7 +5,8 @@ import java.sql.SQLException;
 public abstract class Table {
     protected static Connection conn;
     private static String sourceDir;
-    private String tableName;
+
+    public String tableName;
 
     public Table(String tableName) {
         this.tableName = tableName;

@@ -10,18 +10,20 @@ import java.util.Set;
 
 public class PartTable extends Table {
     public static final int COLUMNS = 7;
+    public static String tableIdentifier;
 
     public PartTable(String tableName) {
         super(tableName);
+        tableIdentifier = tableName;
     }
 
     @Override
     public void createTable() throws SQLException {
         deleteTable();
         Statement stmt = conn.createStatement();
-        stmt.execute("CREATE TABLE part (pID INTEGER PRIMARY KEY, pName VARCHAR(20) NOT NULL, pPrice INTEGER NOT NULL, pWarrantyPeriod INTEGER NOT NULL, pAvailableQuantity INTEGER NOT NULL, " +
-                "mID INTEGER REFERENCES manufacturer(mID), " +
-                "cID INTEGER REFERENCES category(cID))");
+        stmt.execute("CREATE TABLE "+ tableName + " (pID INTEGER PRIMARY KEY, pName VARCHAR(20) NOT NULL, pPrice INTEGER NOT NULL, pWarrantyPeriod INTEGER NOT NULL, pAvailableQuantity INTEGER NOT NULL, " +
+                "mID INTEGER REFERENCES " + ManufacturerTable.tableIdentifier + "(mID), " +
+                "cID INTEGER REFERENCES " + CategoryTable.tableIdentifier + "(cID))");
     }
 
     @Override
@@ -31,13 +33,12 @@ public class PartTable extends Table {
 
     @Override
     public void loadTable() throws SQLException, IOException {
-        System.out.println("Loading parts...");
-        conn.createStatement().executeUpdate("DELETE FROM part");
+        super.loadTable();
 
         // First check if all manufacturer IDs exist
         Set<Integer> validManufacturerIds = new HashSet<>();
         try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT mID FROM manufacturer")) {
+             ResultSet rs = stmt.executeQuery("SELECT mID FROM " + ManufacturerTable.tableIdentifier)) {
             while (rs.next()) {
                 validManufacturerIds.add(rs.getInt("mID"));
             }
@@ -46,7 +47,7 @@ public class PartTable extends Table {
         // Check if all category IDs exist
         Set<Integer> validCategoryIds = new HashSet<>();
         try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT cID FROM category")) {
+             ResultSet rs = stmt.executeQuery("SELECT cID FROM " + CategoryTable.tableIdentifier)) {
             while (rs.next()) {
                 validCategoryIds.add(rs.getInt("cID"));
             }
@@ -54,7 +55,7 @@ public class PartTable extends Table {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSouceDir() + "part.txt"))) {
             PreparedStatement stmt = conn.prepareStatement(
-                    "INSERT INTO part VALUES (?, ?, ?, ?, ?, ?, ?)"
+                    "INSERT INTO " + tableName + " VALUES (?, ?, ?, ?, ?, ?, ?)"
             );
 
             String line;

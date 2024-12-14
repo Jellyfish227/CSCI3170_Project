@@ -7,16 +7,18 @@ import java.sql.Statement;
 
 public class ManufacturerTable extends Table {
     public static final int COLUMNS = 4;
+    public static String tableIdentifier;
 
     public ManufacturerTable(String tableName) {
         super(tableName);
+        tableIdentifier = tableName;
     }
 
     @Override
     public void createTable() throws SQLException {
         deleteTable();
         Statement stmt = conn.createStatement();
-        stmt.execute("CREATE TABLE manufacturer (mID INTEGER PRIMARY KEY, mName VARCHAR(20) NOT NULL, mAddress VARCHAR(50) NOT NULL, mPhoneNumber INTEGER NOT NULL)");
+        stmt.execute("CREATE TABLE " + tableName + " (mID INTEGER PRIMARY KEY, mName VARCHAR(20) NOT NULL, mAddress VARCHAR(50) NOT NULL, mPhoneNumber INTEGER NOT NULL)");
     }
 
     @Override
@@ -26,9 +28,10 @@ public class ManufacturerTable extends Table {
 
     @Override
     public void loadTable() throws SQLException, IOException {
-        System.out.println("Loading manufacturers...");
+        super.loadTable();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSouceDir() + "manufacturer.txt"))) {
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO manufacturer VALUES (?, ?, ?, ?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + tableName + " VALUES (?, ?, ?, ?)");
 
             String line;
             while ((line = reader.readLine()) != null) {

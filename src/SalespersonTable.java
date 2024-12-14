@@ -7,16 +7,18 @@ import java.sql.Statement;
 
 public class SalespersonTable extends Table {
     public static final int COLUMNS = 5;
+    public static String tableIdentifier;
 
     public SalespersonTable(String tableName) {
         super(tableName);
+        tableIdentifier = tableName;
     }
 
     @Override
     public void createTable() throws SQLException {
         deleteTable();
         Statement stmt = conn.createStatement();
-        stmt.execute("CREATE TABLE salesperson (sID INTEGER PRIMARY KEY, sName VARCHAR(20) NOT NULL, sAddress VARCHAR(50) NOT NULL, sPhoneNumber INTEGER NOT NULL, sExperience INTEGER NOT NULL)");
+        stmt.execute("CREATE TABLE " + tableName + " (sID INTEGER PRIMARY KEY, sName VARCHAR(20) NOT NULL, sAddress VARCHAR(50) NOT NULL, sPhoneNumber INTEGER NOT NULL, sExperience INTEGER NOT NULL)");
     }
 
     @Override
@@ -26,12 +28,11 @@ public class SalespersonTable extends Table {
 
     @Override
     public void loadTable() throws SQLException, IOException {
-        System.out.println("Loading salespersons...");
-        conn.createStatement().executeUPdate("DELETE FROM salesperson");
+        super.loadTable();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSouceDir() + "salesperson.txt"))) {
             PreparedStatement ps = conn.prepareStatement(
-                    "INSERT INTO salesperson VALUES (?, ?, ?, ?, ?)"
+                    "INSERT INTO " + tableName + " VALUES (?, ?, ?, ?, ?)"
             );
 
             String line;

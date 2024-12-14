@@ -7,16 +7,18 @@ import java.sql.Statement;
 
 public class CategoryTable extends Table {
     public static final int COLUMNS = 2;
+    public static String tableIdentifier;
 
     public CategoryTable(String tableName) {
         super(tableName);
+        tableIdentifier = tableName;
     }
 
     @Override
     public void createTable() throws SQLException {
         deleteTable();
         Statement stmt = conn.createStatement();
-        stmt.execute("CREATE TABLE category (cID INTEGER PRIMARY KEY, cName VARCHAR(20) NOT NULL)");
+        stmt.execute("CREATE TABLE " + tableName + " (cID INTEGER PRIMARY KEY, cName VARCHAR(20) NOT NULL)");
     }
 
     @Override
@@ -27,9 +29,10 @@ public class CategoryTable extends Table {
 
     @Override
     public void loadTable() throws SQLException, IOException {
-        System.out.println("Loading categories...");
+        super.loadTable();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSouceDir() + "category.txt"))) {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO category VALUES (?, ?)");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tableName + " VALUES (?, ?)");
 
             String line;
             while ((line = reader.readLine()) != null) {
