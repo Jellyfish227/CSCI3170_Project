@@ -17,6 +17,10 @@ public class PartTable extends Table {
         tableIdentifier = tableName;
     }
 
+    public PartTable() {
+        super("part");
+    }
+
     @Override
     public void createTable() throws SQLException {
         deleteTable();
