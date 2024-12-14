@@ -20,14 +20,10 @@ public abstract class Table {
     }
 
     public abstract void createTable() throws SQLException;
-    public abstract void queryTable(String query);
-    /**
-     * Common parent function to print entire table
-    * */
-    public void queryTable() throws SQLException {
-        System.out.println("Content of table " + tableName);
+
+    public void queryTable(String query) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName);
+        ResultSet rs = stmt.executeQuery(query);
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnCount = rsmd.getColumnCount();
 
@@ -47,6 +43,13 @@ public abstract class Table {
             }
             System.out.println();
         }
+    }
+    /**
+     * Common parent function to print entire table
+    * */
+    public void queryTable() throws SQLException {
+        System.out.println("Content of table " + tableName);
+        queryTable("SELECT * FROM " + tableName);
     }
 
     public void deleteTable() throws SQLException{
