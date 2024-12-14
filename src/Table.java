@@ -10,6 +10,10 @@ public abstract class Table {
         Table.sourceDir = sourceDir;
     }
 
+    protected static String getSouceDir() {
+        return sourceDir;
+    }
+
     public abstract void createTable() throws SQLException;
     public abstract void deleteTable() throws SQLException;
     public abstract void loadTable() throws SQLException;
