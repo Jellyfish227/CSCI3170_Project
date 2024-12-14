@@ -3,13 +3,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class TransactionTable extends Table {
     public static final int COLUMNS = 4;
 
     @Override
     public void createTable() throws SQLException {
-
+        deleteTable();
+        Statement stmt = conn.createStatement();
+        stmt.execute("CREATE TABLE transaction (tID INTEGER PRIMARY KEY, " +
+                "pID INTEGER REFERENCES part(pID), " +
+                "sID INTEGER REFERENCES salesperson(sID), " +
+                "tDate DATE NOT NULL)");
     }
 
     @Override
