@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.sql.*;
 
 public abstract class Table {
@@ -56,7 +55,7 @@ public abstract class Table {
         conn.createStatement().executeUpdate("BEGIN EXECUTE IMMEDIATE 'DROP TABLE " + tableName + " CASCADE CONSTRAINTS'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;");
     }
 
-    public void loadTable() throws SQLException, IOException {
+    public void loadTable() throws SQLException {
         System.out.println("Loading " + tableName + "...");
         conn.createStatement().executeUpdate("DELETE FROM " + tableName);
     }
