@@ -1,14 +1,16 @@
 # CSCI3170_Introduction_to_DataBase_System
 
-## Group Information
+## CSCI3170 @CUHK (Fall 2024) Instructed by [Dr. YU Michael Ruisi]
+
+### Group Information
 **Group Number:** 4
 
-### Group Members
+#### Group Members
 - **Tam Yiu Hei** - Student ID: 1155223226
 - **Yu Ching Hei** - Student ID: 1155193237
 - **Leung Chung Wang** - Student ID: 1155194650
 
-## List of Files
+### List of Files
 - `src/com/project/admin.java`: Contains the `Admin` class, responsible for administrative functions and user management.
 - `src/com/project/consoleClient.java`: Implements the console interface for user interaction with the database system.
 - `src/com/project/manager.java`: Defines the `Manager` class, handling managerial tasks and data processing.
@@ -21,7 +23,7 @@
 - `Manager.java`: Another implementation of the `Manager` class, potentially for a different aspect of management.
 - `Salesperson.java`: Another implementation of the `Salesperson` class, potentially for a different aspect of sales.
 
-## Methods of Compilation and Execution
+### Methods of Compilation and Execution
 **Prerequisites**: Ensure you have the Java Development Kit (JDK) installed on your system. You can download it from [oracle.com].
 
 **Clone the Repository**: 
@@ -29,4 +31,3 @@
 git clone https://github.com/Jellyfish227/CSCI3170_Introduction_to_DBS.git
 cd CSCI3170_Introduction_to_DBS
 
-## CSCI3170 @CUHK (Fall 2024) Instructed by [Dr. YU Michael Ruisi]
