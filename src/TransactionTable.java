@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class TransactionTable extends Table {
@@ -14,8 +18,24 @@ public class TransactionTable extends Table {
     }
 
     @Override
-    public void loadTable() throws SQLException {
+    public void loadTable() throws SQLException, IOException {
+        System.out.println("Loading transactions...");
 
+        try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSouceDir() + "transaction.txt"))) {
+            PreparedStatement stmt = conn.prepareStatement(
+                    "INSERT INTO transaction VALUES (?, ?, ?, TO_DATE(?, 'DD/MM/YYYY'))"
+            );
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split("\t");
+                stmt.setInt(1, Integer.parseInt(data[0]));
+                stmt.setInt(2, Integer.parseInt(data[1]));
+                stmt.setInt(3, Integer.parseInt(data[2]));
+                stmt.setString(4, data[3]);
+                stmt.executeUpdate();
+            }
+        }
     }
 
     @Override
