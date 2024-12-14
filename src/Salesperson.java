@@ -1,5 +1,3 @@
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Salesperson extends User {
@@ -33,6 +31,7 @@ public class Salesperson extends User {
     }
 
     private void searchParts() {
+        // handle query generation, pass the query to fn queryTable(query)
         System.out.println("Choose the Search criterion:");
         System.out.println("1. Part Name");
         System.out.println("2. Manufacturer Name");
@@ -47,59 +46,20 @@ public class Salesperson extends User {
 
         int ordering = Console.readInt("Choose the search criterion: ", 1, 2);
 
-        try {
-            // First check if manufacturer exists
-            String checkSql = "SELECT mID, mName FROM manufacturer WHERE LOWER(mName) LIKE LOWER(?)";
-            PreparedStatement checkStmt = db.prepareStatement(checkSql);
-            checkStmt.setString(1, "%" + keyword + "%");
-            ResultSet checkRs = checkStmt.executeQuery();
-
-            System.out.println("\nMatching manufacturers:");
-            while (checkRs.next()) {
-                System.out.printf("Found manufacturer: ID=%d, Name=%s\n",
-                    checkRs.getInt("mID"),
-                    checkRs.getString("mName"));
-            }
-
-            String sql =
+        String sql =
                 "SELECT p.pID as ID, p.pName as Name, m.mName as Manufacturer, " +
-                "c.cName as Category, p.pAvailableQuantity as Quantity, " +
-                "p.pWarrantyPeriod as Warranty, p.pPrice as Price " +
-                "FROM part p " +
-                "JOIN manufacturer m ON p.mID = m.mID " +
-                "JOIN category c ON p.cID = c.cID " +
-                "WHERE " + (criterion == 1 ? "LOWER(p.pName)" : "LOWER(m.mName)") +
-                " LIKE LOWER(?) " +
-                "ORDER BY p.pPrice " + (ordering == 1 ? "ASC" : "DESC");
+                        "c.cName as Category, p.pAvailableQuantity as Quantity, " +
+                        "p.pWarrantyPeriod as Warranty, p.pPrice as Price " +
+                        "FROM part p " +
+                        "JOIN manufacturer m ON p.mID = m.mID " +
+                        "JOIN category c ON p.cID = c.cID " +
+                        "WHERE " + (criterion == 1 ? "LOWER(p.pName)" : "LOWER(m.mName)") +
+                        " LIKE LOWER(%" + keyword + "%) " +
+                        "ORDER BY p.pPrice " + (ordering == 1 ? "ASC" : "DESC");
 
-            // Debug: Print SQL and parameters
-            System.out.println("Debug - SQL: " + sql);
-            System.out.println("Debug - Keyword: " + keyword);
-
-            PreparedStatement pstmt = db.prepareStatement(sql);
-            pstmt.setString(1, "%" + keyword + "%");
-            ResultSet rs = pstmt.executeQuery();
-
-            // Print header
-            System.out.println("| ID | Name | Manufacturer | Category | Quantity | Warranty | Price |");
-
-            // Debug: Print row count
-            int rowCount = 0;
-            while (rs.next()) {
-                rowCount++;
-                System.out.printf("| %d | %s | %s | %s | %d | %d | %d |\n",
-                    rs.getInt("ID"),
-                    rs.getString("Name"),
-                    rs.getString("Manufacturer"),
-                    rs.getString("Category"),
-                    rs.getInt("Quantity"),
-                    rs.getInt("Warranty"),
-                    rs.getInt("Price")
-                );
-            }
-            System.out.println("Debug - Rows found: " + rowCount);
-            System.out.println("End of Query");
-
+        PartTable parts = new PartTable();
+        try {
+            parts.queryTable(sql);
         } catch (SQLException e) {
             System.out.println("Error searching parts: " + e.getMessage());
             e.printStackTrace();  // Add stack trace for debugging
@@ -107,52 +67,14 @@ public class Salesperson extends User {
     }
 
     private void sellPart() {
+        // generate the check sql
         int partId = Console.readInt("Enter The Part ID: ");
-
         int salespersonId = Console.readInt("Enter The Salesperson ID: ");
-
+        TransactionTable transactions = new TransactionTable();
         try {
-            // Start transaction
-            db.setAutoCommit(false);
-
-            // Check part availability
-            String checkSql = "SELECT pName, pAvailableQuantity FROM part WHERE pID = ?";
-            PreparedStatement checkStmt = db.prepareStatement(checkSql);
-            checkStmt.setInt(1, partId);
-            ResultSet rs = checkStmt.executeQuery();
-
-            if (rs.next() && rs.getInt("pAvailableQuantity") > 0) {
-                // Update part quantity
-                String updateSql = "UPDATE part SET pAvailableQuantity = pAvailableQuantity - 1 WHERE pID = ?";
-                PreparedStatement updateStmt = db.prepareStatement(updateSql);
-                updateStmt.setInt(1, partId);
-                updateStmt.executeUpdate();
-
-                // Create transaction record
-                String insertSql = "INSERT INTO transaction (tID, pID, sID, tDate) " +
-                                 "VALUES ((SELECT NVL(MAX(tID), 0) + 1 FROM transaction), ?, ?, SYSDATE)";
-                PreparedStatement insertStmt = db.prepareStatement(insertSql);
-                insertStmt.setInt(1, partId);
-                insertStmt.setInt(2, salespersonId);
-                insertStmt.executeUpdate();
-
-                db.commit();
-                System.out.println("Product: " + rs.getString("pName") + "(id: " + partId +
-                                 ") Remaining Quantity: " + (rs.getInt("pAvailableQuantity") - 1));
-            } else {
-                System.out.println("Error: Part not available!");
-                db.rollback();
-            }
-
-            db.setAutoCommit(true);
+            transactions.recordTransaction(partId, salespersonId);
         } catch (SQLException e) {
-            try {
-                db.rollback();
-                db.setAutoCommit(true);
-            } catch (SQLException ex) {
-                System.out.println("Error rolling back transaction: " + ex.getMessage());
-            }
-            System.out.println("Error performing transaction: " + e.getMessage());
+            System.out.println("Error rolling back transaction: " + e.getMessage());
         }
     }
 

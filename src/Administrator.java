@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class Administrator extends User {
@@ -79,41 +78,14 @@ public class Administrator extends User {
         }
 
         Table.setSourceDir(folderPath);
-        
+
         try {
-            db.getConnection().setAutoCommit(false);
-
-            try {
-                for (Table table : tables) {
-                    table.loadTable();
-                }
-
-                db.getConnection().commit();
-                System.out.println("Data loaded successfully!");
-
-            } catch (IOException e) {
-                db.getConnection().rollback();
-                System.out.println("[Error] Failed to read data file: " + e.getMessage());
-                System.out.println("File path: " + e.getStackTrace()[0].getFileName());
-            } catch (SQLException e) {
-                db.getConnection().rollback();
-                System.out.println("[Error] Database error: " + e.getMessage());
-                System.out.println("Error code: " + e.getErrorCode());
-                if (e.getMessage().contains("integrity constraint")) {
-                    System.out.println("Please check if the foreign key references in the data files are correct!");
-                    System.out.println("Ensure mID in part.txt exists in manufacturer.txt");
-                    System.out.println("Ensure cID in part.txt exists in category.txt");
-                }
+            for (Table table : tables) {
+                table.loadTable();
             }
-        } catch (Exception e) {
-            System.out.println("[Error] Unexpected error: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            try {
-                db.getConnection().setAutoCommit(true);
-            } catch (SQLException e) {
-                System.out.println("[Error] Failed to reset auto-commit: " + e.getMessage());
-            }
+            System.out.println("Data loaded successfully!");
+        } catch (SQLException e) {
+            System.out.println("Error rolling back transaction: " + e.getMessage());
         }
     }
 
@@ -124,6 +96,7 @@ public class Administrator extends User {
             for (Table table : tables) {
                 if (table.getTableName().equals(showTableName)) {
                     table.queryTable();
+                    break;
                 }
             }
         } catch (SQLException e) {
