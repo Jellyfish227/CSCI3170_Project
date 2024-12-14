@@ -11,6 +11,10 @@ import java.util.Set;
 public class PartTable extends Table {
     public static final int COLUMNS = 7;
 
+    public PartTable(String tableName) {
+        super(tableName);
+    }
+
     @Override
     public void createTable() throws SQLException {
         deleteTable();
