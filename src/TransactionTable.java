@@ -8,6 +8,10 @@ import java.sql.Statement;
 public class TransactionTable extends Table {
     public static final int COLUMNS = 4;
 
+    public TransactionTable(String tableName) {
+        super(tableName);
+    }
+
     @Override
     public void createTable() throws SQLException {
         deleteTable();
