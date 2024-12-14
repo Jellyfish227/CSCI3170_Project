@@ -8,6 +8,10 @@ import java.sql.Statement;
 public class CatagoryTable extends Table {
     public static final int COLUMNS = 2;
 
+    public CatagoryTable(String tableName) {
+        super(tableName);
+    }
+
     @Override
     public void createTable() throws SQLException {
         deleteTable();
