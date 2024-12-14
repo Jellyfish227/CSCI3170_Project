@@ -13,6 +13,9 @@ public class TransactionTable extends Table {
         super(tableName);
         tableIdentifier = tableName;
     }
+    public TransactionTable() {
+        super("transaction");
+    }
 
     @Override
     public void createTable() throws SQLException {
