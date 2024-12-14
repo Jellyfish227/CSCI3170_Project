@@ -5,7 +5,6 @@ import java.sql.SQLException;
 public abstract class Table {
     protected static Connection conn;
     private static String sourceDir;
-    private int columns;
 
     public static void setSourceDir(String sourceDir) {
         Table.sourceDir = sourceDir;
