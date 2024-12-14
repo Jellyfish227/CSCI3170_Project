@@ -16,6 +16,6 @@ public abstract class Table {
 
     public abstract void createTable() throws SQLException;
     public abstract void deleteTable() throws SQLException;
-    public abstract void loadTable() throws SQLException;
+    public abstract void loadTable() throws SQLException, IOException;
     public abstract String[] queryTable(String query);
 }
