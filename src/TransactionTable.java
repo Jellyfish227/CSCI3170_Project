@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class TransactionTable extends Table {
     public static final int COLUMNS = 4;
-    public static String tableIdentifier;
+    private static String tableIdentifier;
 
     public TransactionTable(String tableName) {
         super(tableName);
@@ -18,24 +18,19 @@ public class TransactionTable extends Table {
     public void createTable() throws SQLException {
         deleteTable();
         Statement stmt = conn.createStatement();
-        stmt.execute("CREATE TABLE " + tableName + " (tID INTEGER PRIMARY KEY, " +
-                "pID INTEGER REFERENCES "+ PartTable.tableIdentifier + "(pID), " +
-                "sID INTEGER REFERENCES " + SalespersonTable.tableIdentifier + "(sID), " +
+        stmt.execute("CREATE TABLE " + getTableName() + " (tID INTEGER PRIMARY KEY, " +
+                "pID INTEGER REFERENCES "+ PartTable.getTableIdentifier() + "(pID), " +
+                "sID INTEGER REFERENCES " + SalespersonTable.getTableIdentifier() + "(sID), " +
                 "tDate DATE NOT NULL)");
-    }
-
-    @Override
-    public void deleteTable() throws SQLException {
-
     }
 
     @Override
     public void loadTable() throws SQLException, IOException {
         super.loadTable();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSouceDir() + "transaction.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSourceDir() + "transaction.txt"))) {
             PreparedStatement stmt = conn.prepareStatement(
-                    "INSERT INTO " + tableName + " VALUES (?, ?, ?, TO_DATE(?, 'DD/MM/YYYY'))"
+                    "INSERT INTO " + getTableName() + " VALUES (?, ?, ?, TO_DATE(?, 'DD/MM/YYYY'))"
             );
 
             String line;
@@ -53,5 +48,9 @@ public class TransactionTable extends Table {
     @Override
     public String[] queryTable(String query) {
         return new String[0];
+    }
+
+    public static String getTableIdentifier() {
+        return tableIdentifier;
     }
 }

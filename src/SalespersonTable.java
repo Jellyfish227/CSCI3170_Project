@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class SalespersonTable extends Table {
     public static final int COLUMNS = 5;
-    public static String tableIdentifier;
+    private static String tableIdentifier;
 
     public SalespersonTable(String tableName) {
         super(tableName);
@@ -18,21 +18,16 @@ public class SalespersonTable extends Table {
     public void createTable() throws SQLException {
         deleteTable();
         Statement stmt = conn.createStatement();
-        stmt.execute("CREATE TABLE " + tableName + " (sID INTEGER PRIMARY KEY, sName VARCHAR(20) NOT NULL, sAddress VARCHAR(50) NOT NULL, sPhoneNumber INTEGER NOT NULL, sExperience INTEGER NOT NULL)");
-    }
-
-    @Override
-    public void deleteTable() throws SQLException {
-
+        stmt.execute("CREATE TABLE " + getTableName() + " (sID INTEGER PRIMARY KEY, sName VARCHAR(20) NOT NULL, sAddress VARCHAR(50) NOT NULL, sPhoneNumber INTEGER NOT NULL, sExperience INTEGER NOT NULL)");
     }
 
     @Override
     public void loadTable() throws SQLException, IOException {
         super.loadTable();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSouceDir() + "salesperson.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSourceDir() + "salesperson.txt"))) {
             PreparedStatement ps = conn.prepareStatement(
-                    "INSERT INTO " + tableName + " VALUES (?, ?, ?, ?, ?)"
+                    "INSERT INTO " + getTableName() + " VALUES (?, ?, ?, ?, ?)"
             );
 
             String line;
@@ -51,5 +46,9 @@ public class SalespersonTable extends Table {
     @Override
     public String[] queryTable(String query) {
         return new String[0];
+    }
+
+    public static String getTableIdentifier() {
+        return tableIdentifier;
     }
 }

@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class CategoryTable extends Table {
     public static final int COLUMNS = 2;
-    public static String tableIdentifier;
+    private static String tableIdentifier;
 
     public CategoryTable(String tableName) {
         super(tableName);
@@ -18,21 +18,15 @@ public class CategoryTable extends Table {
     public void createTable() throws SQLException {
         deleteTable();
         Statement stmt = conn.createStatement();
-        stmt.execute("CREATE TABLE " + tableName + " (cID INTEGER PRIMARY KEY, cName VARCHAR(20) NOT NULL)");
-    }
-
-    @Override
-    public void deleteTable() throws SQLException {
-        Statement stmt = conn.createStatement();
-
+        stmt.execute("CREATE TABLE " + getTableName() + " (cID INTEGER PRIMARY KEY, cName VARCHAR(20) NOT NULL)");
     }
 
     @Override
     public void loadTable() throws SQLException, IOException {
         super.loadTable();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSouceDir() + "category.txt"))) {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tableName + " VALUES (?, ?)");
+        try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSourceDir() + "category.txt"))) {
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + getTableName() + " VALUES (?, ?)");
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -47,5 +41,9 @@ public class CategoryTable extends Table {
     @Override
     public String[] queryTable(String query) {
         return new String[0];
+    }
+
+    public static String getTableIdentifier() {
+        return tableIdentifier;
     }
 }

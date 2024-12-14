@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class ManufacturerTable extends Table {
     public static final int COLUMNS = 4;
-    public static String tableIdentifier;
+    private static String tableIdentifier;
 
     public ManufacturerTable(String tableName) {
         super(tableName);
@@ -18,20 +18,15 @@ public class ManufacturerTable extends Table {
     public void createTable() throws SQLException {
         deleteTable();
         Statement stmt = conn.createStatement();
-        stmt.execute("CREATE TABLE " + tableName + " (mID INTEGER PRIMARY KEY, mName VARCHAR(20) NOT NULL, mAddress VARCHAR(50) NOT NULL, mPhoneNumber INTEGER NOT NULL)");
-    }
-
-    @Override
-    public void deleteTable() throws SQLException {
-
+        stmt.execute("CREATE TABLE " + getTableName() + " (mID INTEGER PRIMARY KEY, mName VARCHAR(20) NOT NULL, mAddress VARCHAR(50) NOT NULL, mPhoneNumber INTEGER NOT NULL)");
     }
 
     @Override
     public void loadTable() throws SQLException, IOException {
         super.loadTable();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSouceDir() + "manufacturer.txt"))) {
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + tableName + " VALUES (?, ?, ?, ?)");
+        try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSourceDir() + "manufacturer.txt"))) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + getTableName() + " VALUES (?, ?, ?, ?)");
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -48,5 +43,9 @@ public class ManufacturerTable extends Table {
     @Override
     public String[] queryTable(String query) {
         return new String[0];
+    }
+
+    public static String getTableIdentifier() {
+        return tableIdentifier;
     }
 }
