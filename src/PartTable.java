@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class PartTable extends Table {
     public static final int COLUMNS = 7;
-    private static String tableIdentifier;
+    private static String tableIdentifier = "part";
 
     public PartTable(String tableName) {
         super(tableName);
@@ -18,7 +18,7 @@ public class PartTable extends Table {
     }
 
     public PartTable() {
-        super("part");
+        super(tableIdentifier);
     }
 
     @Override
@@ -32,6 +32,7 @@ public class PartTable extends Table {
 
     @Override
     public void loadTable() throws SQLException, IOException {
+        conn.setAutoCommit(false);
         super.loadTable();
 
         // First check if all manufacturer IDs exist
@@ -131,11 +132,13 @@ public class PartTable extends Table {
                     System.out.println("Line content: " + line);
                 }
             }
+            conn.commit();
+        } catch (SQLException | IOException e) {
+            conn.rollback();
+            throw e;
+        } finally {
+            conn.setAutoCommit(true);
         }
-    }
-
-    @Override
-    public void queryTable(String query) {
     }
 
     public static String getTableIdentifier() {

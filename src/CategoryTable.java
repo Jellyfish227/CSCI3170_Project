@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class CategoryTable extends Table {
     public static final int COLUMNS = 2;
-    private static String tableIdentifier;
+    private static String tableIdentifier = "category";
 
     public CategoryTable(String tableName) {
         super(tableName);
@@ -15,7 +15,7 @@ public class CategoryTable extends Table {
     }
 
     public CategoryTable() {
-        super("category");
+        super(tableIdentifier);
     }
 
     @Override
@@ -27,6 +27,7 @@ public class CategoryTable extends Table {
 
     @Override
     public void loadTable() throws SQLException, IOException {
+        conn.setAutoCommit(false);
         super.loadTable();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSourceDir() + "category.txt"))) {
@@ -39,11 +40,13 @@ public class CategoryTable extends Table {
                 ps.setString(2, data[1]);
                 ps.executeUpdate();
             }
+            conn.commit();
+        } catch (SQLException | IOException e) {
+            conn.rollback();
+            throw e;
+        } finally {
+            conn.setAutoCommit(true);
         }
-    }
-
-    @Override
-    public void queryTable(String query) {
     }
 
     public static String getTableIdentifier() {

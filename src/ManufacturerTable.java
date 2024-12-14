@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class ManufacturerTable extends Table {
     public static final int COLUMNS = 4;
-    private static String tableIdentifier;
+    private static String tableIdentifier = "manufacturer";
 
     public ManufacturerTable(String tableName) {
         super(tableName);
@@ -15,7 +15,7 @@ public class ManufacturerTable extends Table {
     }
 
     public ManufacturerTable() {
-        super("manufacturer");
+        super(tableIdentifier);
     }
 
     @Override
@@ -27,6 +27,7 @@ public class ManufacturerTable extends Table {
 
     @Override
     public void loadTable() throws SQLException, IOException {
+        conn.setAutoCommit(false);
         super.loadTable();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSourceDir() + "manufacturer.txt"))) {
@@ -41,11 +42,13 @@ public class ManufacturerTable extends Table {
                 stmt.setInt(4, Integer.parseInt(data[3]));
                 stmt.executeUpdate();
             }
+            conn.commit();
+        } catch (SQLException | IOException e) {
+            conn.rollback();
+            throw e;
+        } finally {
+            conn.setAutoCommit(true);
         }
-    }
-
-    @Override
-    public void queryTable(String query) {
     }
 
     public static String getTableIdentifier() {
