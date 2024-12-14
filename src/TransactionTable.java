@@ -45,9 +45,11 @@ public class TransactionTable extends Table {
         }
     }
 
+    /*
+    *
+    * */
     @Override
-    public String[] queryTable(String query) {
-        return new String[0];
+    public void queryTable(String query) {
     }
 
     public static String getTableIdentifier() {
