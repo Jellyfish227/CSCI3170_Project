@@ -1,6 +1,5 @@
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 
 public abstract class Table {
     protected static Connection conn;
@@ -21,7 +20,34 @@ public abstract class Table {
     }
 
     public abstract void createTable() throws SQLException;
-    public abstract String[] queryTable(String query);
+    public abstract void queryTable(String query);
+    /**
+     * Common parent function to print entire table
+    * */
+    public void queryTable() throws SQLException {
+        System.out.println("Content of table " + tableName);
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName);
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int columnCount = rsmd.getColumnCount();
+
+        // Print column headers
+        System.out.print("|");
+        for (int i = 1; i <= columnCount; i++) {
+            System.out.printf(" %s |", rsmd.getColumnName(i));
+        }
+        System.out.println();
+
+        // Print data rows with proper formatting
+        while (rs.next()) {
+            System.out.print("|");
+            for (int i = 1; i <= columnCount; i++) {
+                String value = rs.getString(i);
+                System.out.printf(" %s |", value != null ? value : "");
+            }
+            System.out.println();
+        }
+    }
 
     public void deleteTable() throws SQLException{
         conn.createStatement().executeUpdate("BEGIN EXECUTE IMMEDIATE 'DROP TABLE " + tableName + " CASCADE CONSTRAINTS'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;");

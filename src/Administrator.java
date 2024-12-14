@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Administrator extends User {
     private Connectable db;
@@ -121,35 +118,14 @@ public class Administrator extends User {
     }
 
     private void showTableContent() {
-        String tableName = Console.readString("Which table would you like to show: ").toLowerCase();
+        String showTableName = Console.readString("Which table would you like to show: ").toLowerCase();
 
         try {
-            Statement stmt = db.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName);
-            ResultSetMetaData metaData = rs.getMetaData();
-            int columnCount = metaData.getColumnCount();
-
-            // Print column headers with proper formatting
-            for (int i = 1; i <= columnCount; i++) {
-                System.out.printf("%-20s", metaData.getColumnName(i));
-            }
-            System.out.println();
-
-            // Print separator line
-            for (int i = 1; i <= columnCount; i++) {
-                System.out.print("--------------------");
-            }
-            System.out.println();
-
-            // Print data rows with proper formatting
-            while (rs.next()) {
-                for (int i = 1; i <= columnCount; i++) {
-                    String value = rs.getString(i);
-                    System.out.printf("%-20s", value != null ? value : "");
+            for (Table table : tables) {
+                if (table.getTableName().equals(showTableName)) {
+                    table.queryTable();
                 }
-                System.out.println();
             }
-
         } catch (SQLException e) {
             System.out.println("Error showing table content: " + e.getMessage());
         }
