@@ -1,16 +1,14 @@
 public class Manager extends User {
-    private Connectable db;
-    private Table[] tables;
     private SalespersonTable st;
     private ManufacturerTable mt;
     private PartTable pt;
 
     public Manager(Table[] tables) {
-        this.tables = tables;
+        super(tables);
         for (Table t: tables) {
             if (t instanceof SalespersonTable) { st = (SalespersonTable) t; }
-            if (t instanceof ManufacturerTable) { mt = (ManufacturerTable) t; }
-            if (t instanceof PartTable) { pt = (PartTable) t; }
+            else if (t instanceof ManufacturerTable) { mt = (ManufacturerTable) t; }
+            else if (t instanceof PartTable) { pt = (PartTable) t; }
         }
     }
 

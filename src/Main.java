@@ -2,6 +2,9 @@ public class Main {
     public static void main(String[] args) {
         // Initialize database connection by try with resources block
         try (Connectable db = new OracalDBConnector()) {
+            Table.conn = db.getConnection();
+            Table[] tables = {new CategoryTable(), new ManufacturerTable(), new PartTable(), new SalespersonTable(), new TransactionTable()};
+
             while (true) {
                 // Display welcome message and main menu
                 System.out.println("Welcome to sales system!");
@@ -15,13 +18,13 @@ public class Main {
                 int choice = Console.readInt("Enter Your Choice: ", 1, 4);
                 switch (choice) {
                     case 1:
-                        user = new Administrator(db); // Inject database dependencies into the corresponding user
+                        user = new Administrator(tables); // Inject tables into the corresponding user
                         break;
                     case 2:
-                        user = new Salesperson(db);
+                        user = new Salesperson(tables);
                         break;
                     case 3:
-                        user = new Manager(db);
+                        user = new Manager(tables);
                         break;
                     case 4:
                         System.out.println("Thank you for using the sales system!");

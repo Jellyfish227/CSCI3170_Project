@@ -2,12 +2,8 @@ import java.io.File;
 import java.sql.SQLException;
 
 public class Administrator extends User {
-    private Connectable db;
-    private Table[] tables = {new CategoryTable(), new ManufacturerTable(), new PartTable(), new SalespersonTable(), new TransactionTable()};
-
-    public Administrator(Connectable db) {
-        this.db = db;
-        Table.conn = db.getConnection();
+    public Administrator(Table[] tables) {
+        super(tables);
     }
 
     @Override
@@ -51,9 +47,6 @@ public class Administrator extends User {
             System.out.println("Processing...Done! Database is initialized!");
         } catch (SQLException e) {
             System.out.println("Error creating tables: " + e.getMessage());
-            if (e.getErrorCode() != 955) { // Ignore "table already exists" error
-                e.printStackTrace();
-            }
         }
     }
 
@@ -65,7 +58,6 @@ public class Administrator extends User {
             System.out.println("Processing...Done! Database is removed!");
         } catch (SQLException e) {
             System.out.println("Error deleting tables: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -83,7 +75,7 @@ public class Administrator extends User {
             for (Table table : tables) {
                 table.loadTable();
             }
-            System.out.println("Data loaded successfully!");
+            System.out.println("Processing...Done! Data is inputted to the database!");
         } catch (SQLException e) {
             System.out.println("Error rolling back transaction: " + e.getMessage());
         }

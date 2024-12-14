@@ -10,12 +10,12 @@ public class OracalDBConnector implements Connectable {
 
     private Connection conn = null;
 
-    public OracalDBConnector() {
+    public OracalDBConnector() throws Exception{
         setConnection();
     }
 
     @Override
-    public void setConnection() {
+    public void setConnection() throws Exception {
         if (conn == null) {
             try {
                 // Register JDBC driver
@@ -27,8 +27,10 @@ public class OracalDBConnector implements Connectable {
 
             } catch (ClassNotFoundException e) {
                 System.out.println("Error: Oracle JDBC Driver not found.");
+                throw e;
             } catch (SQLException e) {
                 System.out.println("Error: Connection failed! Check output console");
+                throw e;
             }
         }
     }

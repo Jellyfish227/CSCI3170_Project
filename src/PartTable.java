@@ -152,6 +152,43 @@ public class PartTable extends Table {
         }
     }
 
+    public void queryPartTable(int criterion, String keyword, int ordering) {
+        String sql =
+                "SELECT p.pID as ID, p.pName as Name, m.mName as Manufacturer, "
+                        + "c.cName as Category, p.pAvailableQuantity as Quantity, "
+                        + "p.pWarrantyPeriod as Warranty, p.pPrice as Price "
+                        + "FROM part p "
+                        + "JOIN manufacturer m ON p.mID = m.mID "
+                        + "JOIN category c ON p.cID = c.cID "
+                        + "WHERE LOWER(" + (criterion == 1 ? "p.pName" : "m.mName") + ") LIKE LOWER(%" + keyword + "%) "
+                        + "ORDER BY p.pPrice "
+                        + (ordering == 1 ? "ASC" : "DESC");
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            // Print headers
+            System.out.println("| ID | Name | Manufacturer | Category | Quantity | Warranty | Price |");
+
+            // Print results
+            while (rs.next()) {
+                System.out.printf("| %d | %s | %s | %s | %d | %d | %d |",
+                        rs.getInt("ID"),
+                        rs.getString("Name"),
+                        rs.getString("Manufacturer"),
+                        rs.getString("Category"),
+                        rs.getInt("Quantity"),
+                        rs.getInt("Warranty"),
+                        rs.getInt("Price")
+                );
+            }
+            System.out.println("End of Query");
+        } catch (SQLException e) {
+            System.out.println("Error searching parts: " + e.getMessage());
+        }
+    }
+
     public void queryPopularParts(int n) {
         String sql = "SELECT p.pID, p.pName, COUNT(t.tID) as transaction_count " +
                 "FROM part p " +

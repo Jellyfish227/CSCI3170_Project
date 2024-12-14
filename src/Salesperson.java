@@ -1,10 +1,15 @@
 import java.sql.SQLException;
 
 public class Salesperson extends User {
-    private Connectable db;
+    private PartTable pt;
+    private TransactionTable tt;
 
-    public Salesperson(Connectable db) {
-        this.db = db;
+    public Salesperson(Table[] tables) {
+        super(tables);
+        for (Table table : tables) {
+            if (table instanceof PartTable) { pt = (PartTable) table; }
+            else if (table instanceof TransactionTable) { tt = (TransactionTable) table; }
+        }
     }
 
     @Override
@@ -46,33 +51,15 @@ public class Salesperson extends User {
 
         int ordering = Console.readInt("Choose the search criterion: ", 1, 2);
 
-        String sql =
-                "SELECT p.pID as ID, p.pName as Name, m.mName as Manufacturer, " +
-                        "c.cName as Category, p.pAvailableQuantity as Quantity, " +
-                        "p.pWarrantyPeriod as Warranty, p.pPrice as Price " +
-                        "FROM part p " +
-                        "JOIN manufacturer m ON p.mID = m.mID " +
-                        "JOIN category c ON p.cID = c.cID " +
-                        "WHERE " + (criterion == 1 ? "LOWER(p.pName)" : "LOWER(m.mName)") +
-                        " LIKE LOWER(%" + keyword + "%) " +
-                        "ORDER BY p.pPrice " + (ordering == 1 ? "ASC" : "DESC");
-
-        PartTable parts = new PartTable();
-        try {
-            parts.queryTable();
-        } catch (SQLException e) {
-            System.out.println("Error searching parts: " + e.getMessage());
-            e.printStackTrace();  // Add stack trace for debugging
-        }
+        pt.queryPartTable(criterion, keyword, ordering);
     }
 
     private void sellPart() {
         // generate the check sql
         int partId = Console.readInt("Enter The Part ID: ");
         int salespersonId = Console.readInt("Enter The Salesperson ID: ");
-        TransactionTable transactions = new TransactionTable();
         try {
-            transactions.recordTransaction(partId, salespersonId);
+            tt.recordTransaction(partId, salespersonId);
         } catch (SQLException e) {
             System.out.println("Error rolling back transaction: " + e.getMessage());
         }
