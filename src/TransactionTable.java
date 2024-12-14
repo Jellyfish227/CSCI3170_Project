@@ -92,8 +92,8 @@ public class TransactionTable extends Table {
                 insertStmt.executeUpdate(insertSql);
 
                 conn.commit();
-                System.out.println("Product: " + rs.getString("pName") + "(id: " + partId +
-                        ") Remaining Quantity: " + (rs.getInt("pAvailableQuantity") - 1));
+                System.out.println("Product: " + rs.getString("pName") + "(id: "
+                        + partId + ") Remaining Quantity: " + (rs.getInt("pAvailableQuantity") - 1));
             } else {
                 System.out.println("Error: Part not available!");
                 conn.rollback();

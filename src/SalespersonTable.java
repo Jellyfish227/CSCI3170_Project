@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -64,10 +65,10 @@ public class SalespersonTable extends Table {
     }
 
     public void querySalespersonByExp(int ordering) {
-        String sql = "SELECT sID as ID, sName as Name, sPhoneNumber as \"Mobile Phone\", " +
-                "sExperience as \"Years of Experience\" " +
-                "FROM salesperson ORDER BY sExperience " +
-                (ordering == 1 ? "ASC" : "DESC");
+        String sql = "SELECT sID as ID, sName as Name, sPhoneNumber as \"Mobile Phone\", "
+                + "sExperience as \"Years of Experience\" "
+                + "FROM salesperson ORDER BY sExperience "
+                + (ordering == 1 ? "ASC" : "DESC");
 
         try {
             Statement stmt = conn.createStatement();

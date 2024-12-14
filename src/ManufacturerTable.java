@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -55,6 +56,35 @@ public class ManufacturerTable extends Table {
             System.out.println("[Error] Database error: " + e.getMessage());
             System.out.println("Error code: " + e.getErrorCode());
         }
+    }
+
+    public void queryManufacturerSales() {
+        String sql = "SELECT m.mID as \"Manufacturer ID\", " +
+                "m.mName as \"Manufacturer Name\", " +
+                "COALESCE(SUM(p.pPrice), 0) as \"Total Sales Value\" " +
+                "FROM manufacturer m " +
+                "LEFT JOIN part p ON m.mID = p.mID " +
+                "LEFT JOIN transaction t ON p.pID = t.pID " +
+                "GROUP BY m.mID, m.mName " +
+                "ORDER BY \"Total Sales Value\" DESC";
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            System.out.println("| Manufacturer ID | Manufacturer Name | Total Sales Value |");
+            while (rs.next()) {
+                System.out.printf("| %d | %s | %d |\n",
+                        rs.getInt("Manufacturer ID"),
+                        rs.getString("Manufacturer Name"),
+                        rs.getInt("Total Sales Value")
+                );
+            }
+            System.out.println("End of Query");
+        } catch (SQLException e) {
+            System.out.println("Error showing table content: " + e.getMessage());
+        }
+
     }
 
     public static String getTableIdentifier() {

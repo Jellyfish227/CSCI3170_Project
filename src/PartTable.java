@@ -152,6 +152,34 @@ public class PartTable extends Table {
         }
     }
 
+    public void queryPopularParts(int n) {
+        String sql = "SELECT p.pID, p.pName, COUNT(t.tID) as transaction_count " +
+                "FROM part p " +
+                "LEFT JOIN transaction t ON p.pID = t.pID " +
+                "GROUP BY p.pID, p.pName " +
+                "HAVING COUNT(t.tID) > 0 " +
+                "ORDER BY transaction_count DESC " +
+                "FETCH FIRST " + n + " ROWS ONLY";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            System.out.println("| Part ID | Part Name | No. of Transaction |");
+
+            while (rs.next()) {
+                System.out.printf("| %d | %s | %d |\n",
+                        rs.getInt("pID"),
+                        rs.getString("pName"),
+                        rs.getInt("transaction_count")
+                );
+            }
+            System.out.println("End of Query");
+        } catch (SQLException e) {
+            System.out.println("Error showing popular parts: " + e.getMessage());
+        }
+
+    }
+
     public static String getTableIdentifier() {
         return tableIdentifier;
     }

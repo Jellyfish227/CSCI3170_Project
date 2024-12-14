@@ -59,7 +59,7 @@ public class Salesperson extends User {
 
         PartTable parts = new PartTable();
         try {
-            parts.queryTable(sql);
+            parts.queryTable();
         } catch (SQLException e) {
             System.out.println("Error searching parts: " + e.getMessage());
             e.printStackTrace();  // Add stack trace for debugging
