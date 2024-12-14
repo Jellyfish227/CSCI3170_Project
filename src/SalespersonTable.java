@@ -62,4 +62,31 @@ public class SalespersonTable extends Table {
     public static String getTableIdentifier() {
         return tableIdentifier;
     }
+
+    public void queryTable(int ordering) {
+        String sql = "SELECT sID as ID, sName as Name, sPhoneNumber as \"Mobile Phone\", " +
+                "sExperience as \"Years of Experience\" " +
+                "FROM salesperson ORDER BY sExperience " +
+                (ordering == 1 ? "ASC" : "DESC");
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            // Print headers
+            System.out.println("| ID | Name | Mobile Phone | Years of Experience |");
+
+            // Print results
+            while (rs.next()) {
+                System.out.printf("| %d | %s | %d | %d |\n",
+                        rs.getInt("ID"),
+                        rs.getString("Name"),
+                        rs.getInt("Mobile Phone"),
+                        rs.getInt("Years of Experience")
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println("Error listing salespersons: " + e.getMessage());
+        }
+    }
 }
