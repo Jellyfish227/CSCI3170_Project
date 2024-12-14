@@ -14,6 +14,10 @@ public class CategoryTable extends Table {
         tableIdentifier = tableName;
     }
 
+    public CategoryTable() {
+        super("category");
+    }
+
     @Override
     public void createTable() throws SQLException {
         deleteTable();
