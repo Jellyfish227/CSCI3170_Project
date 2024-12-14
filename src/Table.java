@@ -5,6 +5,11 @@ import java.sql.SQLException;
 public abstract class Table {
     protected static Connection conn;
     private static String sourceDir;
+    private String tableName;
+
+    public Table(String tableName) {
+        this.tableName = tableName;
+    }
 
     public static void setSourceDir(String sourceDir) {
         Table.sourceDir = sourceDir;
@@ -16,6 +21,9 @@ public abstract class Table {
 
     public abstract void createTable() throws SQLException;
     public abstract void deleteTable() throws SQLException;
-    public abstract void loadTable() throws SQLException, IOException;
+    public void loadTable() throws SQLException, IOException {
+        System.out.println("Loading " + tableName + "...");
+        conn.createStatement().executeUpdate("DELETE FROM " + tableName);
+    }
     public abstract String[] queryTable(String query);
 }

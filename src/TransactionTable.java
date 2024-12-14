@@ -29,7 +29,7 @@ public class TransactionTable extends Table {
 
     @Override
     public void loadTable() throws SQLException, IOException {
-        System.out.println("Loading transactions...");
+        super.loadTable();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSouceDir() + "transaction.txt"))) {
             PreparedStatement stmt = conn.prepareStatement(

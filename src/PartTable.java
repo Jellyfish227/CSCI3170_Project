@@ -32,6 +32,7 @@ public class PartTable extends Table {
     @Override
     public void loadTable() throws SQLException, IOException {
         System.out.println("Loading parts...");
+        conn.createStatement().executeUpdate("DELETE FROM part");
 
         // First check if all manufacturer IDs exist
         Set<Integer> validManufacturerIds = new HashSet<>();

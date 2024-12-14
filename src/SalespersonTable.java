@@ -27,6 +27,8 @@ public class SalespersonTable extends Table {
     @Override
     public void loadTable() throws SQLException, IOException {
         System.out.println("Loading salespersons...");
+        conn.createStatement().executeUPdate("DELETE FROM salesperson");
+
         try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSouceDir() + "salesperson.txt"))) {
             PreparedStatement ps = conn.prepareStatement(
                     "INSERT INTO salesperson VALUES (?, ?, ?, ?, ?)"

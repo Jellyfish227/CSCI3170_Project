@@ -5,10 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class CatagoryTable extends Table {
+public class CategoryTable extends Table {
     public static final int COLUMNS = 2;
 
-    public CatagoryTable(String tableName) {
+    public CategoryTable(String tableName) {
         super(tableName);
     }
 

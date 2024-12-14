@@ -1,13 +1,13 @@
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.sql.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Administrator extends User {
     private Connectable db;
+    private Table[] tables = {new CategoryTable(), new ManufacturerTable(), new PartTable(), new SalespersonTable(), new TransactionTable()};
 
     public Administrator(Connectable db) {
         this.db = db;
@@ -117,13 +117,12 @@ public class Administrator extends User {
         Table.setSourceDir(folderPath);
         
         try {
-            db.setAutoCommit(false);
+            db.getConnection().setAutoCommit(false);
             
             Statement stmt = db.createStatement();
             String[] deleteStatements = {
-                "DELETE FROM transaction",
-                "DELETE FROM part",
-                "DELETE FROM salesperson",
+                ,
+                ,
                 "DELETE FROM manufacturer",
                 "DELETE FROM category"
             };
