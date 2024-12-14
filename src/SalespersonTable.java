@@ -9,7 +9,9 @@ public class SalespersonTable extends Table {
 
     @Override
     public void createTable() throws SQLException {
-
+        deleteTable();
+        Statement stmt = conn.createStatement();
+        stmt.execute("CREATE TABLE salesperson (sID INTEGER PRIMARY KEY, sName VARCHAR(20) NOT NULL, sAddress VARCHAR(50) NOT NULL, sPhoneNumber INTEGER NOT NULL, sExperience INTEGER NOT NULL)");
     }
 
     @Override
