@@ -28,4 +28,5 @@
 ```bash
 git clone https://github.com/Jellyfish227/CSCI3170_Introduction_to_DBS.git
 cd CSCI3170_Introduction_to_DBS
+
 ## CSCI3170 @CUHK (Fall 2024) Instructed by [Dr. YU Michael Ruisi]
