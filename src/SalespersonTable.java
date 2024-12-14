@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class SalespersonTable extends Table {
     public static final int COLUMNS = 5;
