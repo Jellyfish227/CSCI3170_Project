@@ -63,7 +63,7 @@ public class SalespersonTable extends Table {
         return tableIdentifier;
     }
 
-    public void queryTable(int ordering) {
+    public void querySalespersonByExp(int ordering) {
         String sql = "SELECT sID as ID, sName as Name, sPhoneNumber as \"Mobile Phone\", " +
                 "sExperience as \"Years of Experience\" " +
                 "FROM salesperson ORDER BY sExperience " +
