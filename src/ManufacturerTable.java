@@ -14,6 +14,10 @@ public class ManufacturerTable extends Table {
         tableIdentifier = tableName;
     }
 
+    public ManufacturerTable() {
+        super("manufacturer");
+    }
+
     @Override
     public void createTable() throws SQLException {
         deleteTable();
