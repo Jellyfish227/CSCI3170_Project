@@ -31,7 +31,7 @@ public class PartTable extends Table {
     }
 
     @Override
-    public void loadTable() throws SQLException, IOException {
+    public void loadTable() throws SQLException {
         conn.setAutoCommit(false);
         super.loadTable();
 
@@ -133,11 +133,22 @@ public class PartTable extends Table {
                 }
             }
             conn.commit();
-        } catch (SQLException | IOException e) {
-            conn.rollback();
-            throw e;
-        } finally {
             conn.setAutoCommit(true);
+        } catch (IOException e) {
+            conn.rollback();
+            conn.setAutoCommit(true);
+            System.out.println("[Error] Failed to read data file: " + e.getMessage());
+            System.out.println("Error File: " + e.getStackTrace()[0].getFileName());
+        } catch (SQLException e) {
+            conn.rollback();
+            conn.setAutoCommit(true);
+            System.out.println("[Error] Database error: " + e.getMessage());
+            System.out.println("Error code: " + e.getErrorCode());
+            if (e.getMessage().contains("integrity constraint")) {
+                System.out.println("Please check if the foreign key references in the data files are correct!");
+                System.out.println("Ensure mID in part.txt exists in manufacturer.txt");
+                System.out.println("Ensure cID in part.txt exists in category.txt");
+            }
         }
     }
 

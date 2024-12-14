@@ -26,7 +26,7 @@ public class ManufacturerTable extends Table {
     }
 
     @Override
-    public void loadTable() throws SQLException, IOException {
+    public void loadTable() throws SQLException {
         conn.setAutoCommit(false);
         super.loadTable();
 
@@ -43,11 +43,17 @@ public class ManufacturerTable extends Table {
                 stmt.executeUpdate();
             }
             conn.commit();
-        } catch (SQLException | IOException e) {
-            conn.rollback();
-            throw e;
-        } finally {
             conn.setAutoCommit(true);
+        } catch (IOException e) {
+            conn.rollback();
+            conn.setAutoCommit(true);
+            System.out.println("[Error] Failed to read data file: " + e.getMessage());
+            System.out.println("Error File: " + e.getStackTrace()[0].getFileName());
+        } catch (SQLException e) {
+            conn.rollback();
+            conn.setAutoCommit(true);
+            System.out.println("[Error] Database error: " + e.getMessage());
+            System.out.println("Error code: " + e.getErrorCode());
         }
     }
 

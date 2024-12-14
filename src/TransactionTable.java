@@ -29,10 +29,10 @@ public class TransactionTable extends Table {
     }
 
     @Override
-    public void loadTable() throws SQLException, IOException {
-        conn.setAutoCommit(false);
-        super.loadTable();
+    public void loadTable() throws SQLException {
         try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSourceDir() + "transaction.txt"))) {
+            conn.setAutoCommit(false);
+            super.loadTable();
             PreparedStatement stmt = conn.prepareStatement(
                     "INSERT INTO " + getTableName() + " VALUES (?, ?, ?, TO_DATE(?, 'DD/MM/YYYY'))"
             );
@@ -47,17 +47,28 @@ public class TransactionTable extends Table {
                 stmt.executeUpdate();
             }
             conn.commit();
-        } catch (SQLException | IOException e) {
-            conn.rollback();
-            throw e;
-        } finally {
             conn.setAutoCommit(true);
+        } catch (IOException e) {
+            conn.rollback();
+            conn.setAutoCommit(true);
+            System.out.println("[Error] Failed to read data file: " + e.getMessage());
+            System.out.println("Error File: " + e.getStackTrace()[0].getFileName());
+        } catch (SQLException e) {
+            conn.rollback();
+            conn.setAutoCommit(true);
+            System.out.println("[Error] Database error: " + e.getMessage());
+            System.out.println("Error code: " + e.getErrorCode());
+            if (e.getMessage().contains("integrity constraint")) {
+                System.out.println("Please check if the foreign key references in the data files are correct!");
+                System.out.println("Ensure pID in transaction.txt exists in part.txt");
+                System.out.println("Ensure sID in transaction.txt exists in salesperson.txt");
+            }
         }
     }
 
     public void recordTransaction(int partId, int salespersonId) throws SQLException {
-        conn.setAutoCommit(false);
         try {
+            conn.setAutoCommit(false);
             // Check part availability
             String checkSql = "SELECT pName, pAvailableQuantity FROM "
                     + PartTable.getTableIdentifier()
@@ -68,36 +79,30 @@ public class TransactionTable extends Table {
 
             if (rs.next() && rs.getInt("pAvailableQuantity") > 0) {
                 // Update part quantity
-                String updateSql = "UPDATE part SET pAvailableQuantity = pAvailableQuantity - 1 WHERE pID = ?";
-                PreparedStatement updateStmt = db.prepareStatement(updateSql);
-                updateStmt.setInt(1, partId);
-                updateStmt.executeUpdate();
+                String updateSql = "UPDATE " + PartTable.getTableIdentifier() + " SET pAvailableQuantity = pAvailableQuantity - 1 WHERE pID = " + partId;
+                Statement updateStmt = conn.createStatement();
+                updateStmt.executeUpdate(updateSql);
 
                 // Create transaction record
-                String insertSql = "INSERT INTO transaction (tID, pID, sID, tDate) " +
-                        "VALUES ((SELECT NVL(MAX(tID), 0) + 1 FROM transaction), ?, ?, SYSDATE)";
-                PreparedStatement insertStmt = db.prepareStatement(insertSql);
-                insertStmt.setInt(1, partId);
-                insertStmt.setInt(2, salespersonId);
-                insertStmt.executeUpdate();
+                String insertSql = "INSERT INTO " + getTableName() + " (tID, pID, sID, tDate) "
+                        + "VALUES ((SELECT NVL(MAX(tID), 0) + 1 FROM " + getTableName() + "), "
+                        + partId + ", "
+                        + salespersonId + ", SYSDATE)";
+                Statement insertStmt = conn.createStatement();
+                insertStmt.executeUpdate(insertSql);
 
-                db.commit();
+                conn.commit();
                 System.out.println("Product: " + rs.getString("pName") + "(id: " + partId +
                         ") Remaining Quantity: " + (rs.getInt("pAvailableQuantity") - 1));
             } else {
                 System.out.println("Error: Part not available!");
-                db.rollback();
+                conn.rollback();
             }
-
-            db.setAutoCommit(true);
+            conn.setAutoCommit(true);
         } catch (SQLException e) {
-            try {
-                db.rollback();
-                db.setAutoCommit(true);
-            } catch (SQLException ex) {
-                System.out.println("Error rolling back transaction: " + ex.getMessage());
-            }
-
+            conn.rollback();
+            conn.setAutoCommit(true);
+            System.out.println("Error performing transaction: " + e.getMessage());
         }
     }
 
