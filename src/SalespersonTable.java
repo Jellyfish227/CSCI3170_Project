@@ -89,4 +89,32 @@ public class SalespersonTable extends Table {
             System.out.println("Error listing salespersons: " + e.getMessage());
         }
     }
+
+    public void querySalespersonTransaction(int begin, int end) {
+        String sql = "SELECT s.sID as ID, s.sName as Name, s.sExperience as Experience, "
+                + "COUNT(t.tID) as \"Number of Transaction\" "
+                + "FROM salesperson s LEFT JOIN transaction t ON s.sID = t.sID "
+                + "WHERE s.sExperience BETWEEN " + begin + " AND " + end + " "
+                + "GROUP BY s.sID, s.sName, s.sExperience "
+                + "ORDER BY s.sID DESC";
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            System.out.println("Transaction Record:");
+            System.out.println("| ID | Name | Years of Experience | Number of Transaction |");
+            while (rs.next()) {
+                System.out.printf("| %d | %s | %d | %d |\n",
+                        rs.getInt("ID"),
+                        rs.getString("Name"),
+                        rs.getInt("Experience"),
+                        rs.getInt("Number of Transaction")
+                );
+            }
+            System.out.println("End of Query");
+        } catch (SQLException e) {
+            System.out.println("Error counting transactions: " + e.getMessage());
+        }
+    }
 }
