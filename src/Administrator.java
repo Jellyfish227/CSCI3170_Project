@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class Administrator extends User {
     private Connectable db;
-    private Table[] tables = {new CategoryTable(), new ManufacturerTable(), new PartTable(), new SalespersonTable(), new TransactionTable()};
+    private Table[] tables = {new CategoryTable("category"), new ManufacturerTable("manufacturer"), new PartTable("part"), new SalespersonTable("salesperson"), new TransactionTable("transaction")};
 
     public Administrator(Connectable db) {
         this.db = db;
@@ -48,29 +48,8 @@ public class Administrator extends User {
 
     private void createTables() {
         try {
-            Statement stmt = db.createStatement();
-            
-            // Create tables with foreign key constraints
-            String[] createStatements = {
-                "CREATE TABLE category (cID INTEGER PRIMARY KEY, cName VARCHAR(20) NOT NULL)",
-                
-                "CREATE TABLE manufacturer (mID INTEGER PRIMARY KEY, mName VARCHAR(20) NOT NULL, mAddress VARCHAR(50) NOT NULL, mPhoneNumber INTEGER NOT NULL)",
-                
-                "CREATE TABLE salesperson (sID INTEGER PRIMARY KEY, sName VARCHAR(20) NOT NULL, sAddress VARCHAR(50) NOT NULL, sPhoneNumber INTEGER NOT NULL, sExperience INTEGER NOT NULL)",
-                
-                "CREATE TABLE part (pID INTEGER PRIMARY KEY, pName VARCHAR(20) NOT NULL, pPrice INTEGER NOT NULL, pWarrantyPeriod INTEGER NOT NULL, pAvailableQuantity INTEGER NOT NULL, " +
-                "mID INTEGER REFERENCES manufacturer(mID), " +
-                "cID INTEGER REFERENCES category(cID))",
-                
-                "CREATE TABLE transaction (tID INTEGER PRIMARY KEY, " +
-                "pID INTEGER REFERENCES part(pID), " +
-                "sID INTEGER REFERENCES salesperson(sID), " +
-                "tDate DATE NOT NULL)"
-            };
-
-            // Execute create statements
-            for (String createSql : createStatements) {
-                stmt.execute(createSql);
+            for (Table table : tables) {
+                table.createTable();
             }
 
             System.out.println("Processing...Done! Database is initialized!");
@@ -84,20 +63,8 @@ public class Administrator extends User {
 
     private void deleteTables() {
         try {
-            Statement stmt = db.createStatement();
-            
-            // Use the same drop statements as in createTables()
-            String[] dropStatements = {
-                "BEGIN EXECUTE IMMEDIATE 'DROP TABLE transaction CASCADE CONSTRAINTS'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;",
-                "BEGIN EXECUTE IMMEDIATE 'DROP TABLE part CASCADE CONSTRAINTS'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;",
-                "BEGIN EXECUTE IMMEDIATE 'DROP TABLE salesperson CASCADE CONSTRAINTS'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;",
-                "BEGIN EXECUTE IMMEDIATE 'DROP TABLE manufacturer CASCADE CONSTRAINTS'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;",
-                "BEGIN EXECUTE IMMEDIATE 'DROP TABLE category CASCADE CONSTRAINTS'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;"
-            };
-
-            // Execute drop statements
-            for (String dropSql : dropStatements) {
-                stmt.execute(dropSql);
+            for (Table table : tables) {
+                table.deleteTable();
             }
             System.out.println("Processing...Done! Database is removed!");
         } catch (SQLException e) {
@@ -118,44 +85,21 @@ public class Administrator extends User {
         
         try {
             db.getConnection().setAutoCommit(false);
-            
-            Statement stmt = db.createStatement();
-            String[] deleteStatements = {
-                ,
-                ,
-                "DELETE FROM manufacturer",
-                "DELETE FROM category"
-            };
-            
-            for (String delete : deleteStatements) {
-                stmt.executeUpdate(delete);
-            }
 
             try {
+                for (Table table : tables) {
+                    table.loadTable();
+                }
 
-                loadCategory(folderPath);
-                
-
-                loadManufacturer(folderPath);
-                
-
-                loadSalesperson(folderPath);
-                
-
-                loadPart(folderPath);
-                
-
-                loadTransaction(folderPath);
-
-                db.commit();
+                db.getConnection().commit();
                 System.out.println("Data loaded successfully!");
 
             } catch (IOException e) {
-                db.rollback();
+                db.getConnection().rollback();
                 System.out.println("[Error] Failed to read data file: " + e.getMessage());
                 System.out.println("File path: " + e.getStackTrace()[0].getFileName());
             } catch (SQLException e) {
-                db.rollback();
+                db.getConnection().rollback();
                 System.out.println("[Error] Database error: " + e.getMessage());
                 System.out.println("Error code: " + e.getErrorCode());
                 if (e.getMessage().contains("integrity constraint")) {
@@ -169,7 +113,7 @@ public class Administrator extends User {
             e.printStackTrace();
         } finally {
             try {
-                db.setAutoCommit(true);
+                db.getConnection().setAutoCommit(true);
             } catch (SQLException e) {
                 System.out.println("[Error] Failed to reset auto-commit: " + e.getMessage());
             }
