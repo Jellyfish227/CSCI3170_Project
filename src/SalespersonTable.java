@@ -14,6 +14,10 @@ public class SalespersonTable extends Table {
         tableIdentifier = tableName;
     }
 
+    public SalespersonTable() {
+        super("salesperson");
+    }
+
     @Override
     public void createTable() throws SQLException {
         deleteTable();
