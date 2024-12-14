@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class SalespersonTable extends Table {
@@ -14,8 +18,24 @@ public class SalespersonTable extends Table {
     }
 
     @Override
-    public void loadTable() throws SQLException {
+    public void loadTable() throws SQLException, IOException {
+        System.out.println("Loading salespersons...");
+        try (BufferedReader reader = new BufferedReader(new FileReader(Table.getSouceDir() + "salesperson.txt"))) {
+            PreparedStatement ps = conn.prepareStatement(
+                    "INSERT INTO salesperson VALUES (?, ?, ?, ?, ?)"
+            );
 
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split("\t");
+                ps.setInt(1, Integer.parseInt(data[0]));
+                ps.setString(2, data[1]);
+                ps.setString(3, data[2]);
+                ps.setInt(4, Integer.parseInt(data[3]));
+                ps.setInt(5, Integer.parseInt(data[4]));
+                ps.executeUpdate();
+            }
+        }
     }
 
     @Override
