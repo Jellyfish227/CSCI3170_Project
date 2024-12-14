@@ -13,7 +13,11 @@ public class PartTable extends Table {
 
     @Override
     public void createTable() throws SQLException {
-
+        deleteTable();
+        Statement stmt = conn.createStatement();
+        stmt.execute("CREATE TABLE part (pID INTEGER PRIMARY KEY, pName VARCHAR(20) NOT NULL, pPrice INTEGER NOT NULL, pWarrantyPeriod INTEGER NOT NULL, pAvailableQuantity INTEGER NOT NULL, " +
+                "mID INTEGER REFERENCES manufacturer(mID), " +
+                "cID INTEGER REFERENCES category(cID))");
     }
 
     @Override
