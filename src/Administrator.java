@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public class Administrator extends User {
     private Connectable db;
-    private Table[] tables = {new CategoryTable("category"), new ManufacturerTable("manufacturer"), new PartTable("part"), new SalespersonTable("salesperson"), new TransactionTable("transaction")};
+    private Table[] tables = {new CategoryTable(), new ManufacturerTable(), new PartTable(), new SalespersonTable(), new TransactionTable()};
 
     public Administrator(Connectable db) {
         this.db = db;
