@@ -6,7 +6,7 @@ public abstract class Table {
     protected static Connection conn;
     private static String sourceDir;
 
-    public String tableName;
+    private String tableName;
 
     public Table(String tableName) {
         this.tableName = tableName;
@@ -16,15 +16,23 @@ public abstract class Table {
         Table.sourceDir = sourceDir;
     }
 
-    protected static String getSouceDir() {
+    protected static String getSourceDir() {
         return sourceDir;
     }
 
     public abstract void createTable() throws SQLException;
-    public abstract void deleteTable() throws SQLException;
+    public abstract String[] queryTable(String query);
+
+    public void deleteTable() throws SQLException{
+        conn.createStatement().executeUpdate("BEGIN EXECUTE IMMEDIATE 'DROP TABLE " + tableName + " CASCADE CONSTRAINTS'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;");
+    }
+
     public void loadTable() throws SQLException, IOException {
         System.out.println("Loading " + tableName + "...");
         conn.createStatement().executeUpdate("DELETE FROM " + tableName);
     }
-    public abstract String[] queryTable(String query);
+
+    public String getTableName() {
+        return tableName;
+    }
 }
