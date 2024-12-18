@@ -66,7 +66,7 @@ public class Manager extends User {
     }
 
     private void showPopularParts() {
-        int n = Console.readInt("Type in the number of parts: ");
+        int n = Console.readInt("Type in the number of parts: ",1, Integer.MAX_VALUE);
 
         pt.queryPopularParts(n);
     }
