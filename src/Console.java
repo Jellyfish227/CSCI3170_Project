@@ -22,7 +22,7 @@ public class Console {
             try {
                 System.out.print(prompt);
                 value = scanner.nextInt();
-                if (value > min && value < max) {
+                if (value >= min && value <= max) {
                     break;
                 }
                 System.out.print("Enter a value between " + min + " and " + max + ": ");
