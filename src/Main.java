@@ -34,7 +34,7 @@ public class Main {
                 user.executeMenu();
             }
         } catch (Exception e) {
-            System.out.println("Error with database connection! ");
+            System.out.println("Program terminated with an error. Check stack trace!");
         }
     }
 } 
