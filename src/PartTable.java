@@ -26,8 +26,8 @@ public class PartTable extends Table {
         deleteTable();
         Statement stmt = conn.createStatement();
         stmt.execute("CREATE TABLE "+ getTableName() + " (pID INTEGER PRIMARY KEY, pName VARCHAR(20) NOT NULL, pPrice INTEGER NOT NULL, pWarrantyPeriod INTEGER NOT NULL, pAvailableQuantity INTEGER NOT NULL, " +
-                "mID INTEGER REFERENCES " + ManufacturerTable.getTableIdentifier() + "(mID), " +
-                "cID INTEGER REFERENCES " + CategoryTable.getTableIdentifier() + "(cID))");
+                "mID INTEGER REFERENCES " + ManufacturerTable.getTableIdentifier() + "(mID) ON DELETE CASCADE , " +
+                "cID INTEGER REFERENCES " + CategoryTable.getTableIdentifier() + "(cID) ON DELETE CASCADE)");
     }
 
     @Override

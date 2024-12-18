@@ -23,8 +23,8 @@ public class TransactionTable extends Table {
         deleteTable();
         Statement stmt = conn.createStatement();
         stmt.execute("CREATE TABLE " + getTableName() + " (tID INTEGER PRIMARY KEY, " +
-                "pID INTEGER REFERENCES "+ PartTable.getTableIdentifier() + "(pID), " +
-                "sID INTEGER REFERENCES " + SalespersonTable.getTableIdentifier() + "(sID), " +
+                "pID INTEGER REFERENCES "+ PartTable.getTableIdentifier() + "(pID) ON DELETE CASCADE , " +
+                "sID INTEGER REFERENCES " + SalespersonTable.getTableIdentifier() + "(sID) ON DELETE CASCADE , " +
                 "tDate DATE NOT NULL)");
     }
 
