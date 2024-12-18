@@ -62,9 +62,9 @@ public class ManufacturerTable extends Table {
         String sql = "SELECT m.mID as \"Manufacturer ID\", " +
                 "m.mName as \"Manufacturer Name\", " +
                 "COALESCE(SUM(p.pPrice), 0) as \"Total Sales Value\" " +
-                "FROM manufacturer m " +
-                "LEFT JOIN part p ON m.mID = p.mID " +
-                "LEFT JOIN transaction t ON p.pID = t.pID " +
+                "FROM " + getTableName() + " m " +
+                "LEFT JOIN " + PartTable.getTableIdentifier() + " p ON m.mID = p.mID " +
+                "LEFT JOIN " + TransactionTable.getTableIdentifier() + " t ON p.pID = t.pID " +
                 "GROUP BY m.mID, m.mName " +
                 "ORDER BY \"Total Sales Value\" DESC";
 
