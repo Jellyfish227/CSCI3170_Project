@@ -4,10 +4,10 @@ public class Main {
         try (Connectable db = new OracalDBConnector()) {
             Table.conn = db.getConnection();
             Table[] tables = {new CategoryTable(), new ManufacturerTable(), new PartTable(), new SalespersonTable(), new TransactionTable()};
+            System.out.println("Welcome to sales system!");
 
             while (true) {
                 // Display welcome message and main menu
-                System.out.println("Welcome to sales system!");
                 System.out.println("\n-----Main menu-----");
                 System.out.println("What kinds of operation would you like to perform?");
                 System.out.println("1. Operations for administrator");
