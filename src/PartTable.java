@@ -157,9 +157,9 @@ public class PartTable extends Table {
                 "SELECT p.pID as ID, p.pName as Name, m.mName as Manufacturer, "
                         + "c.cName as Category, p.pAvailableQuantity as Quantity, "
                         + "p.pWarrantyPeriod as Warranty, p.pPrice as Price "
-                        + "FROM part p "
-                        + "JOIN manufacturer m ON p.mID = m.mID "
-                        + "JOIN category c ON p.cID = c.cID "
+                        + "FROM " + getTableName() + " p "
+                        + "JOIN " + ManufacturerTable.getTableIdentifier() + " m ON p.mID = m.mID "
+                        + "JOIN " + CategoryTable.getTableIdentifier() + " c ON p.cID = c.cID "
                         + "WHERE LOWER(" + (criterion == 1 ? "p.pName" : "m.mName") + ") LIKE LOWER(%" + keyword + "%) "
                         + "ORDER BY p.pPrice "
                         + (ordering == 1 ? "ASC" : "DESC");
@@ -191,8 +191,8 @@ public class PartTable extends Table {
 
     public void queryPopularParts(int n) {
         String sql = "SELECT p.pID, p.pName, COUNT(t.tID) as transaction_count " +
-                "FROM part p " +
-                "LEFT JOIN transaction t ON p.pID = t.pID " +
+                "FROM " + getTableName() + " p " +
+                "LEFT JOIN " + TransactionTable.getTableIdentifier() + " t ON p.pID = t.pID " +
                 "GROUP BY p.pID, p.pName " +
                 "HAVING COUNT(t.tID) > 0 " +
                 "ORDER BY transaction_count DESC " +
