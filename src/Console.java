@@ -25,7 +25,7 @@ public class Console {
                 if (value >= min && value <= max) {
                     break;
                 }
-                System.out.print("Enter a value between " + min + " and " + max + ": ");
+                System.out.print("Error: Enter a value between " + min + " and " + max + "!\n");
             } catch (InputMismatchException e) {
                 scanner.nextLine(); // empty buffer
                 System.out.println("Wrong input type detected, please try again.");
