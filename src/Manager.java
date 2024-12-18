@@ -22,7 +22,6 @@ public class Manager extends User {
             System.out.println("3. Show the total sales value of each manufacturer");
             System.out.println("4. Show the N most popular part");
             System.out.println("5. Return to the main menu");
-            System.out.print("Enter Your Choice: ");
 
             int choice = Console.readInt("Enter Your Choice: ", 1, 5);
 
