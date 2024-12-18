@@ -50,7 +50,7 @@ public abstract class Table {
 
     public void loadTable() throws SQLException {
         System.out.println("Loading " + tableName + "..."); //FIXME: remove after debug
-        conn.createStatement().executeUpdate("DELETE FROM " + tableName + " CASCADE CONSTRAINTS");
+        conn.createStatement().executeUpdate("DELETE FROM " + tableName);
     }
 
     public String getTableName() {
