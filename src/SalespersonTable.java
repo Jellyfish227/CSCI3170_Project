@@ -95,7 +95,8 @@ public class SalespersonTable extends Table {
     public void querySalespersonTransaction(int begin, int end) {
         String sql = "SELECT s.sID as ID, s.sName as Name, s.sExperience as Experience, "
                 + "COUNT(t.tID) as \"Number of Transaction\" "
-                + "FROM salesperson s LEFT JOIN transaction t ON s.sID = t.sID "
+                + "FROM " + getTableName() + " s LEFT JOIN "
+                + TransactionTable.getTableIdentifier() + " t ON s.sID = t.sID "
                 + "WHERE s.sExperience BETWEEN " + begin + " AND " + end + " "
                 + "GROUP BY s.sID, s.sName, s.sExperience "
                 + "ORDER BY s.sID DESC";
