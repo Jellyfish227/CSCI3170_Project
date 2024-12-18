@@ -67,8 +67,9 @@ public class SalespersonTable extends Table {
     public void querySalespersonByExp(int ordering) {
         String sql = "SELECT sID as ID, sName as Name, sPhoneNumber as \"Mobile Phone\", "
                 + "sExperience as \"Years of Experience\" "
-                + "FROM salesperson ORDER BY sExperience "
-                + (ordering == 1 ? "ASC" : "DESC");
+                + "FROM " + getTableName() + " ORDER BY sExperience "
+                + (ordering == 1 ? "ASC" : "DESC")
+                + ", sID ASC";
 
         try {
             Statement stmt = conn.createStatement();
