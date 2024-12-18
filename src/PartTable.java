@@ -153,6 +153,7 @@ public class PartTable extends Table {
     }
 
     public void queryPartTable(int criterion, String keyword, int ordering) {
+        @SuppressWarnings("SqlType")
         String sql =
                 "SELECT p.pID as ID, p.pName as Name, m.mName as Manufacturer, "
                         + "c.cName as Category, p.pAvailableQuantity as Quantity, "
@@ -160,20 +161,22 @@ public class PartTable extends Table {
                         + "FROM " + getTableName() + " p "
                         + "JOIN " + ManufacturerTable.getTableIdentifier() + " m ON p.mID = m.mID "
                         + "JOIN " + CategoryTable.getTableIdentifier() + " c ON p.cID = c.cID "
-                        + "WHERE LOWER(" + (criterion == 1 ? "p.pName" : "m.mName") + ") LIKE LOWER(%" + keyword + "%) "
+                        + "WHERE " + (criterion == 1 ? "LOWER(p.pName)" : "LOWER(m.mName)")
+                        + " LIKE (?) "
                         + "ORDER BY p.pPrice "
                         + (ordering == 1 ? "ASC" : "DESC");
 
         try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, "%" + keyword + "%");
+            ResultSet rs = stmt.executeQuery();
 
             // Print headers
             System.out.println("| ID | Name | Manufacturer | Category | Quantity | Warranty | Price |");
 
             // Print results
             while (rs.next()) {
-                System.out.printf("| %d | %s | %s | %s | %d | %d | %d |",
+                System.out.printf("| %d | %s | %s | %s | %d | %d | %d |\n",
                         rs.getInt("ID"),
                         rs.getString("Name"),
                         rs.getString("Manufacturer"),
