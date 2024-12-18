@@ -42,7 +42,7 @@ public class OracalDBConnector implements Connectable {
     public void close() throws SQLException {
         if (conn != null) {
             this.conn.close();
-            System.out.println("Database connection closed.");
+            System.out.println("Database connection closed."); // FIXME: remove after debug
         }
     }
 }

@@ -29,12 +29,15 @@ public class Main {
                     case 4:
                         System.out.println("Thank you for using the sales system!");
                         return;
+                    default:
+                        System.out.println("Invalid choice!");
                 }
                 assert user != null;
                 user.executeMenu();
             }
         } catch (Exception e) {
             System.out.println("Program terminated with an error. Check stack trace!");
+            e.printStackTrace(); // FIXME: remove after debug
         }
     }
 } 

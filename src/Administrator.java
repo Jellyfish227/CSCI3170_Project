@@ -34,6 +34,8 @@ public class Administrator extends User {
                     break;
                 case 5:
                     return;
+                default:
+                    System.out.println("Invalid choice");
             }
         }
     }
@@ -62,7 +64,7 @@ public class Administrator extends User {
     }
 
     public void loadFromDatafile() {
-        String folderPath = Console.readString("Please enter the folder path: ").trim();
+        String folderPath = Console.readString("\nType in the Source Data Folder Path: ").trim();
         
         // Ensure path ends with slash
         if (!folderPath.endsWith(File.separator)) {
@@ -88,9 +90,10 @@ public class Administrator extends User {
             for (Table table : tables) {
                 if (table.getTableName().equals(showTableName)) {
                     table.queryTable();
-                    break;
+                    return;
                 }
             }
+            System.out.println("Table not found: " + showTableName);
         } catch (SQLException e) {
             System.out.println("Error showing table content: " + e.getMessage());
         }
