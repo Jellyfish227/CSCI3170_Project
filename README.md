@@ -103,5 +103,11 @@ All project specifications, manuals, and related course materials are the intell
 
 ## Methods of Compilation and Execution
 
-To compile and run the project, follow these steps:
+To compile and run the Sales System project, you can use the provided `run.bat` batch file, which automates the compilation and execution process. Follow these steps:
 
+1. **Prerequisites**: Ensure you have the Java Development Kit (JDK) installed on your machine. You can download it from the [Oracle website](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) or use OpenJDK.
+
+2. **Clone the Repository**: Clone this repository to your local machine using:
+   ```bash
+   git clone https://github.com/your-repo-url.git](https://github.com/Jellyfish227/CSCI3170_Introduction_to_DBS.git
+   cd Sales System
