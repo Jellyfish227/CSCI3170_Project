@@ -9,13 +9,13 @@ This repository contains academic work and is published for record and reference
 All project specifications, manuals, and related course materials are the intellectual property of The Chinese University of Hong Kong or Texas Instruments. I do not own or claim any copyright over these materials. They are provided for reference only.### Group Information
 **Group Number**: 4
 
-### Project Structure
+## Project Structure
+### File Tree
 ![WhatsApp Image 2024-12-20 at 21 37 52](https://github.com/user-attachments/assets/ed30ff54-3f92-4099-a9c6-f91f62cb6e1a)
-
-#### Documentation
+### Documentation
 - [Project Specification](docs/project_spec.pdf)
 - [Suggested ER Diagram](docs/suggested-ER.pdf)
-####  Source Code
+###  Source Code
 - [Administrator](src/Administrator.java)
 - [CategoryTable](src/CategoryTable.java)
 - [Connectable](src/Connectable.java)
@@ -30,15 +30,15 @@ All project specifications, manuals, and related course materials are the intell
 - [Table](src/Table.java)
 - [TransactionTable](src/TransactionTable.java)
 - [User](src/User.java)
-#### File Description
+### File Description
 - 
 
-#### Group Members
+## Group Members
 - **Tam Yiu Hei**  Student ID: 1155223226 Email: 1155223226@link.cuhk.edu.hk
 - **Yu Ching Hei**  Student ID: 1155193237 Email: chyu2@cse.cuhk.edu.hk
 - **Leung Chung Wang**  Student ID: 1155194650 Email: 1155194650@link.cuhk.edu.hk
 
-### Acknowledgments
+## Acknowledgments
 - **Instructor**:  Dr. YU, Michael Ruisi
 - **TA**:
   - DING Wenlong
@@ -46,6 +46,6 @@ All project specifications, manuals, and related course materials are the intell
   - LIU Yuqi
   - LU Haodong
   - ZHANG Yiyi 
-### Methods of Compilation and Execution
+## Methods of Compilation and Execution
 
 
