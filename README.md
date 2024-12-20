@@ -14,7 +14,43 @@ All project specifications, manuals, and related course materials are the intell
 ## Project Structure
 
 ### File Tree
-![Project File Tree](https://github.com/user-attachments/assets/ed30ff54-3f92-4099-a9c6-f91f62cb6e1a)
+CSCI3170_Introduction_to_DBS
+├── idea
+│   ├── dictionaries
+│   ├── inspectionProfiles
+│   ├── gitignore
+│   ├── dataSources.xml
+│   ├── discord.xml
+│   ├── material_theme_project_new.xml
+│   ├── modules.xml
+│   └── vcs.xml
+├── docs
+│   ├── project_spec.pdf
+│   └── suggested-ER.pdf
+├── qbdbc.jar
+└── out
+    └── production -> CSCI3170_Introduction_to_DBS
+        ├── sample_data
+        │   ├── category.txt
+        │   ├── manufacturer.txt
+        │   ├── part.txt
+        │   ├── salesperson.txt
+        │   └── transaction.txt
+        └── src
+            ├── sample_data
+            │   ├── Administrator.java
+            │   ├── Connectable.java
+            │   ├── Console.java
+            │   ├── Main.java
+            │   ├── Manager.java
+            │   ├── OracleDBConnector.java
+            │   ├── PartTable.java
+            │   ├── TransactionTable.java
+            │   └── User.java
+            └── run.bat
+├── .gitignore
+├── LICENSE
+└── README.md
 
 ### Documentation
 - [Project Specification](docs/project_spec.pdf)
