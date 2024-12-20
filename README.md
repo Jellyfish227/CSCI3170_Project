@@ -110,4 +110,4 @@ To compile and run the Sales System project, you can use the provided `run.bat` 
 2. **Clone the Repository**: Clone this repository to your local machine using:
    ```bash
    git clone https://github.com/Jellyfish227/CSCI3170_Introduction_to_DBS.git
-   cd Sales System
+   cd CSCI3170_Introduction_to_DBS
