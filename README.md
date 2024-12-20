@@ -15,7 +15,6 @@ All project specifications, manuals, and related course materials are the intell
 
 ### File Tree
     
-    ```plaintext
     CSCI3170_Introduction_to_DBS
     │
     ├── .idea
