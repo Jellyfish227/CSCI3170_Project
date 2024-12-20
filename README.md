@@ -35,6 +35,7 @@ All project specifications, manuals, and related course materials are the intell
 - [Table](src/Table.java)
 - [TransactionTable](src/TransactionTable.java)
 - [User](src/User.java)
+- [run.bat](src/run.bat)
 
 ### File Descriptions
 - **src/Table.java**  
@@ -78,6 +79,9 @@ All project specifications, manuals, and related course materials are the intell
 
 - **src/SalespersonTable.java**  
   Inherits from `Table` and implements specific operations for the salesperson table, including table creation and loading salesperson data.
+
+- **src/run.bat**  
+  A batch file that automates the compilation and execution of the Java application. It compiles all Java source files in the `src` directory and then runs the `Main` class, providing a simple way to start the application without manually entering commands.
 
 ## Group Members
 - **Tam Yiu Hei**  
