@@ -11,7 +11,7 @@ All project specifications, manuals, and related course materials are the intell
 
 ### Project Structure
 #### Documentation
--[Project Specification][docs/project_spec.pdf]
+-[Project Specification](docs/project_spec.pdf)
 
 #### Group Members
 - **Tam Yiu Hei** - Student ID: 1155223226 -Email: 1155223226@link.cuhk.edu.hk
