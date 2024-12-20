@@ -11,19 +11,37 @@ All project specifications, manuals, and related course materials are the intell
 
 ### Project Structure
 #### Documentation
--[Project Specification](docs/project_spec.pdf)
+- [Project Specification](docs/project_spec.pdf)
+- [Suggested ER Diagram](docs/suggested-ER.pdf)
+####  Source Code
+- [Administrator](src/Administrator.java)
+- [CategoryTable](src/CategoryTable.java)
+- [Connectable](src/Connectable.java)
+- [Console](src/Console.java)
+- [Main](src/Main.java)
+- [Manager](src/Manager.java)
+- [ManufacturerTable](src/ManufacturerTable.java)
+- [OracalDBConnector](src/OracalDBConnector.java)
+- [PartTable](src/PartTable.java)
+- [Salesperson](src/Salesperson.java)
+- [SalespersonTable](src/SalespersonTable.java)
+- [Table](src/Table.java)
+- [TransactionTable](src/TransactionTable.java)
+- [User](src/User.java)
 
 #### Group Members
 - **Tam Yiu Hei** - Student ID: 1155223226 -Email: 1155223226@link.cuhk.edu.hk
 - **Yu Ching Hei** - Student ID: 1155193237 -Email: chyu2@cse.cuhk.edu.hk
 - **Leung Chung Wang** - Student ID: 1155194650 -Email: 1155194650@link.cuhk.edu.hk
 
-
+### Acknowledgments
+- **Instructor:** - Dr. YU, Michael Ruisi
+- **TA:**
+  - DING Wenlong
+  - GAO Jialin
+  - LIU Yuqi
+  - LU Haodong
+  - ZHANG Yiyi 
 ### Methods of Compilation and Execution
-**Prerequisites**: Ensure you have the Java Development Kit (JDK) installed on your system. You can download it from [oracle.com].
 
-**Clone the Repository**: 
-```bash
-git clone https://github.com/Jellyfish227/CSCI3170_Introduction_to_DBS.git
-cd CSCI3170_Introduction_to_DBS
 
