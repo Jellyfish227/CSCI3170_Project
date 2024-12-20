@@ -14,8 +14,73 @@ All project specifications, manuals, and related course materials are the intell
 ## Project Structure
 
 ### File Tree
-![image](https://github.com/user-attachments/assets/ae290994-4cd5-4a9d-bf42-b1c9432c2b96)
 
+CSCI3170_Introduction_to_DBS
+│
+├── .idea
+│   ├── dictionaries
+│   │   └── jellyfish.xml
+│   ├── inspectionProfiles
+│   │   └── Project_Default.xml
+│   ├── .gitignore
+│   ├── dataSources.xml
+│   ├── discord.xml
+│   ├── material_theme_project_new.xml
+│   ├── misc.xml
+│   ├── modules.xml
+│   ├── sqldialects.xml
+│   └── vcs.xml
+│
+├── docs
+│   ├── project_spec.pdf
+│   └── suggested-ER.pdf
+│
+├── lib
+│   └── ojdbc8.jar
+│
+├── out
+│   └── production
+│       └── CSCI3170_Introduction_to_DBS
+│           ├── category.txt
+│           ├── manufacturer.txt
+│           ├── part.txt
+│           ├── salesperson.txt
+│           ├── transaction.txt
+│           ├── run.bat
+│           └── sample_data
+│               ├── category.txt
+│               ├── manufacturer.txt
+│               ├── part.txt
+│               ├── salesperson.txt
+│               └── transaction.txt
+│
+├── src
+│   ├── sample_data
+│   │   ├── category.txt
+│   │   ├── manufacturer.txt
+│   │   ├── part.txt
+│   │   ├── salesperson.txt
+│   │   └── transaction.txt
+│   ├── Administrator.java
+│   ├── CategoryTable.java
+│   ├── Connectable.java
+│   ├── Console.java
+│   ├── Main.java
+│   ├── Manager.java
+│   ├── ManufacturerTable.java
+│   ├── OracalDBConnector.java
+│   ├── PartTable.java
+│   ├── run.bat
+│   ├── Salesperson.java
+│   ├── SalespersonTable.java
+│   ├── TransactionTable.java
+│   └── User.java
+│
+├── CSCI3170_Introduction_to_DBS.iml
+│
+├── LICENSE
+│
+└── README.md
 
 ### Documentation
 - [Project Specification](docs/project_spec.pdf)
