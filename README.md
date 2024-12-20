@@ -2,26 +2,22 @@
 
 ## CSCI3170 @CUHK (Fall 2024) Instructed by [Dr. YU Michael Ruisi]
 
-### Group Information
+## Disclaimer
+
+This repository contains academic work and is published for record and reference purposes only. Do not copy or reuse the code as it may constitute academic misconduct. The code is specific to our course project and should be used solely for learning and understanding the concepts. For your own good, please do your project with your own understanding and knowledge. I am not responsible for any academic misconduct caused by the code in this repository.
+
+All project specifications, manuals, and related course materials are the intellectual property of The Chinese University of Hong Kong or Texas Instruments. I do not own or claim any copyright over these materials. They are provided for reference only.### Group Information
 **Group Number:** 4
 
-#### Group Members
-- **Tam Yiu Hei** - Student ID: 1155223226
-- **Yu Ching Hei** - Student ID: 1155193237
-- **Leung Chung Wang** - Student ID: 1155194650
+### Project Structure
+#### Documentation
+-[Project Specification][docs/project_spec.pdf]
 
-### List of Files
-- `src/com/project/admin.java`: Contains the `Admin` class, responsible for administrative functions and user management.
-- `src/com/project/consoleClient.java`: Implements the console interface for user interaction with the database system.
-- `src/com/project/manager.java`: Defines the `Manager` class, handling managerial tasks and data processing.
-- `src/com/project/salesperson.java`: Contains the `Salesperson` class, which manages sales-related operations.
-- `src/com/project/SQLgenerator.java`: Responsible for generating SQL queries based on user inputs and actions.
-- `src/com/project/User.java`: Defines the `User` class, representing a generic user in the system.
-- `Administrator.java`: Implements the `Administrator` class, extending user functionalities with admin-specific features.
-- `DatabaseConnector.java`: Manages database connections, including opening and closing connections to the database.
-- `Main.java`: The entry point of the application, coordinating the initial setup and launching the application.
-- `Manager.java`: Another implementation of the `Manager` class, potentially for a different aspect of management.
-- `Salesperson.java`: Another implementation of the `Salesperson` class, potentially for a different aspect of sales.
+#### Group Members
+- **Tam Yiu Hei** - Student ID: 1155223226 -Email: 1155223226@link.cuhk.edu.hk
+- **Yu Ching Hei** - Student ID: 1155193237 -Email: chyu2@cse.cuhk.edu.hk
+- **Leung Chung Wang** - Student ID: 1155194650 -Email: 1155194650@link.cuhk.edu.hk
+
 
 ### Methods of Compilation and Execution
 **Prerequisites**: Ensure you have the Java Development Kit (JDK) installed on your system. You can download it from [oracle.com].
