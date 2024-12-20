@@ -14,7 +14,8 @@ All project specifications, manuals, and related course materials are the intell
 ## Project Structure
 
 ### File Tree
-![image](https://github.com/user-attachments/assets/0d1d7195-a20b-4243-96ce-fc52f02e33b0)
+![image](https://github.com/user-attachments/assets/ae290994-4cd5-4a9d-bf42-b1c9432c2b96)
+
 
 ### Documentation
 - [Project Specification](docs/project_spec.pdf)
