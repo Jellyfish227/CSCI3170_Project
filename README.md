@@ -31,7 +31,61 @@ All project specifications, manuals, and related course materials are the intell
 - [TransactionTable](src/TransactionTable.java)
 - [User](src/User.java)
 ### File Description
-- 
+- src/Table.java
+
+Defines the abstract class Table, providing basic methods for data table operations such as creating, querying, deleting, and loading tables.
+
+- src/TransactionTable.java
+
+Inherits from Table and implements specific operations for the transaction table, including table creation and loading transaction data.
+
+- src/User.java
+
+Defines the abstract class User, representing a user and providing an abstract method for executing menus.
+
+- src/Administrator.java
+
+Inherits from User and implements the administrator's operations menu, including creating and deleting tables and loading data.
+
+- src/CategoryTable.java
+
+Inherits from Table and implements specific operations for the category table, including table creation and loading category data.
+
+- src/Connectable.java
+
+Defines an interface Connectable for setting and retrieving database connections.
+
+- src/Console.java
+
+Provides convenient console input methods for reading various types of user input.
+
+- src/Main.java
+
+The main program entry point, responsible for initializing the database connection and displaying the main menu to manage user operations.
+
+- src/Manager.java
+
+Inherits from User and implements the manager's operations menu, including querying salespersons and manufacturers' sales data.
+
+- src/ManufacturerTable.java
+
+Inherits from Table and implements specific operations for the manufacturer table, including table creation and loading manufacturer data.
+
+- src/OracalDBConnector.java
+
+Implements the Connectable interface, handling the specific implementation for establishing a connection to an Oracle database.
+
+- src/PartTable.java
+
+Inherits from Table and implements specific operations for the part table, including table creation and loading part data.
+
+- src/Salesperson.java
+
+Inherits from User and implements the salesperson's operations menu, including searching for parts and selling parts.
+
+- src/SalespersonTable.java
+
+Inherits from Table and implements specific operations for the salesperson table, including table creation and loading salesperson data.
 
 ## Group Members
 - **Tam Yiu Hei**  Student ID: 1155223226 Email: 1155223226@link.cuhk.edu.hk
