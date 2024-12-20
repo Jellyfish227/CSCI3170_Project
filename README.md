@@ -15,6 +15,7 @@ All project specifications, manuals, and related course materials are the intell
 
 ### File Tree
 
+''' 
 CSCI3170_Introduction_to_DBS
 │
 ├── .idea
@@ -81,7 +82,7 @@ CSCI3170_Introduction_to_DBS
 ├── LICENSE
 │
 └── README.md
-
+'''
 ### Documentation
 - [Project Specification](docs/project_spec.pdf)
 - [Suggested ER Diagram](docs/suggested-ER.pdf)
