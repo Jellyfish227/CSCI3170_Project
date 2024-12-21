@@ -81,8 +81,7 @@
                                 <include>**/*.jar</include>
                             </includes>
                             <excludes>
-                                <exclude>**/important.log</exclude>
-                                <exclude>**/another-important.log</exclude>
+                                <exclude>./lib/*.jar</exclude>
                             </excludes>
                             <followSymlinks>false</followSymlinks>
                         </fileset>

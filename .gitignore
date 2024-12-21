@@ -29,4 +29,4 @@ replay_pid*
 # compiled target file
 target/
 
-!/lib/ojdbc8.jar
+!/lib/**
