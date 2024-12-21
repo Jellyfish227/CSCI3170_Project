@@ -61,20 +61,20 @@ All project specifications and related course materials are the intellectual pro
     │   │   ├── part.txt
     │   │   ├── salesperson.txt
     │   │   └── transaction.txt
-    │   ├── Administrator.java
-    │   ├── CategoryTable.java
-    │   ├── Connectable.java
-    │   ├── Console.java
-    │   ├── Main.java
-    │   ├── Manager.java
-    │   ├── ManufacturerTable.java
-    │   ├── OracalDBConnector.java
-    │   ├── PartTable.java
+    │   ├── cuhk.com.SQL_SoonQuitLife.csci3170.cse.Administrator.java
+    │   ├── cuhk.com.SQL_SoonQuitLife.csci3170.cse.CategoryTable.java
+    │   ├── cuhk.com.SQL_SoonQuitLife.csci3170.cse.Connectable.java
+    │   ├── cuhk.com.SQL_SoonQuitLife.csci3170.cse.Console.java
+    │   ├── cuhk.com.SQL_SoonQuitLife.csci3170.cse.Main.java
+    │   ├── cuhk.com.SQL_SoonQuitLife.csci3170.cse.Manager.java
+    │   ├── cuhk.com.SQL_SoonQuitLife.csci3170.cse.ManufacturerTable.java
+    │   ├── cuhk.com.SQL_SoonQuitLife.csci3170.cse.OracalDBConnector.java
+    │   ├── cuhk.com.SQL_SoonQuitLife.csci3170.cse.PartTable.java
     │   ├── run.bat
-    │   ├── Salesperson.java
-    │   ├── SalespersonTable.java
-    │   ├── TransactionTable.java
-    │   └── User.java
+    │   ├── cuhk.com.SQL_SoonQuitLife.csci3170.cse.Salesperson.java
+    │   ├── cuhk.com.SQL_SoonQuitLife.csci3170.cse.SalespersonTable.java
+    │   ├── cuhk.com.SQL_SoonQuitLife.csci3170.cse.TransactionTable.java
+    │   └── cuhk.com.SQL_SoonQuitLife.csci3170.cse.User.java
     │
     ├── CSCI3170_Introduction_to_DBS.iml
     │
@@ -87,67 +87,67 @@ All project specifications and related course materials are the intellectual pro
 - [Suggested ER Diagram](docs/suggested-ER.pdf)
 
 ### Source Code
-- [Administrator](src/Administrator.java)
-- [CategoryTable](src/CategoryTable.java)
-- [Connectable](src/Connectable.java)
-- [Console](src/Console.java)
-- [Main](src/Main.java)
-- [Manager](src/Manager.java)
-- [ManufacturerTable](src/ManufacturerTable.java)
-- [OracalDBConnector](src/OracalDBConnector.java)
-- [PartTable](src/PartTable.java)
-- [Salesperson](src/Salesperson.java)
-- [SalespersonTable](src/SalespersonTable.java)
-- [Table](src/Table.java)
-- [TransactionTable](src/TransactionTable.java)
-- [User](src/User.java)
+- [cuhk.com.SQL_SoonQuitLife.csci3170.cse.Administrator](src/Administrator.java)
+- [cuhk.com.SQL_SoonQuitLife.csci3170.cse.CategoryTable](src/CategoryTable.java)
+- [cuhk.com.SQL_SoonQuitLife.csci3170.cse.Connectable](src/Connectable.java)
+- [cuhk.com.SQL_SoonQuitLife.csci3170.cse.Console](src/Console.java)
+- [cuhk.com.SQL_SoonQuitLife.csci3170.cse.Main](src/Main.java)
+- [cuhk.com.SQL_SoonQuitLife.csci3170.cse.Manager](src/Manager.java)
+- [cuhk.com.SQL_SoonQuitLife.csci3170.cse.ManufacturerTable](src/ManufacturerTable.java)
+- [cuhk.com.SQL_SoonQuitLife.csci3170.cse.OracalDBConnector](src/OracalDBConnector.java)
+- [cuhk.com.SQL_SoonQuitLife.csci3170.cse.PartTable](src/PartTable.java)
+- [cuhk.com.SQL_SoonQuitLife.csci3170.cse.Salesperson](src/Salesperson.java)
+- [cuhk.com.SQL_SoonQuitLife.csci3170.cse.SalespersonTable](src/SalespersonTable.java)
+- [cuhk.com.SQL_SoonQuitLife.csci3170.cse.Table](src/Table.java)
+- [cuhk.com.SQL_SoonQuitLife.csci3170.cse.TransactionTable](src/TransactionTable.java)
+- [cuhk.com.SQL_SoonQuitLife.csci3170.cse.User](src/User.java)
 - [run.bat](src/run.bat)
 
 ### File Descriptions
-- **src/Table.java**  
-  Defines the abstract class `Table`, providing basic methods for data table operations such as creating, querying, deleting, and loading tables.
+- **src/cuhk.com.SQL_SoonQuitLife.csci3170.cse.Table.java**  
+  Defines the abstract class `cuhk.com.SQL_SoonQuitLife.csci3170.cse.Table`, providing basic methods for data table operations such as creating, querying, deleting, and loading tables.
 
-- **src/TransactionTable.java**  
-  Inherits from `Table` and implements specific operations for the transaction table, including table creation and loading transaction data.
+- **src/cuhk.com.SQL_SoonQuitLife.csci3170.cse.TransactionTable.java**  
+  Inherits from `cuhk.com.SQL_SoonQuitLife.csci3170.cse.Table` and implements specific operations for the transaction table, including table creation and loading transaction data.
 
-- **src/User.java**  
-  Defines the abstract class `User`, representing a user and providing an abstract method for executing menus.
+- **src/cuhk.com.SQL_SoonQuitLife.csci3170.cse.User.java**  
+  Defines the abstract class `cuhk.com.SQL_SoonQuitLife.csci3170.cse.User`, representing a user and providing an abstract method for executing menus.
 
-- **src/Administrator.java**  
-  Inherits from `User` and implements the administrator's operations menu, including creating and deleting tables and loading data.
+- **src/cuhk.com.SQL_SoonQuitLife.csci3170.cse.Administrator.java**  
+  Inherits from `cuhk.com.SQL_SoonQuitLife.csci3170.cse.User` and implements the administrator's operations menu, including creating and deleting tables and loading data.
 
-- **src/CategoryTable.java**  
-  Inherits from `Table` and implements specific operations for the category table, including table creation and loading category data.
+- **src/cuhk.com.SQL_SoonQuitLife.csci3170.cse.CategoryTable.java**  
+  Inherits from `cuhk.com.SQL_SoonQuitLife.csci3170.cse.Table` and implements specific operations for the category table, including table creation and loading category data.
 
-- **src/Connectable.java**  
-  Defines an interface `Connectable` for setting and retrieving database connections.
+- **src/cuhk.com.SQL_SoonQuitLife.csci3170.cse.Connectable.java**  
+  Defines an interface `cuhk.com.SQL_SoonQuitLife.csci3170.cse.Connectable` for setting and retrieving database connections.
 
-- **src/Console.java**  
+- **src/cuhk.com.SQL_SoonQuitLife.csci3170.cse.Console.java**  
   Provides convenient console input methods for reading various types of user input.
 
-- **src/Main.java**  
+- **src/cuhk.com.SQL_SoonQuitLife.csci3170.cse.Main.java**  
   The main program entry point, responsible for initializing the database connection and displaying the main menu to manage user operations.
 
-- **src/Manager.java**  
-  Inherits from `User` and implements the manager's operations menu, including querying salespersons and manufacturers' sales data.
+- **src/cuhk.com.SQL_SoonQuitLife.csci3170.cse.Manager.java**  
+  Inherits from `cuhk.com.SQL_SoonQuitLife.csci3170.cse.User` and implements the manager's operations menu, including querying salespersons and manufacturers' sales data.
 
-- **src/ManufacturerTable.java**  
-  Inherits from `Table` and implements specific operations for the manufacturer table, including table creation and loading manufacturer data.
+- **src/cuhk.com.SQL_SoonQuitLife.csci3170.cse.ManufacturerTable.java**  
+  Inherits from `cuhk.com.SQL_SoonQuitLife.csci3170.cse.Table` and implements specific operations for the manufacturer table, including table creation and loading manufacturer data.
 
-- **src/OracalDBConnector.java**  
-  Implements the `Connectable` interface, handling the specific implementation for establishing a connection to an Oracle database.
+- **src/cuhk.com.SQL_SoonQuitLife.csci3170.cse.OracalDBConnector.java**  
+  Implements the `cuhk.com.SQL_SoonQuitLife.csci3170.cse.Connectable` interface, handling the specific implementation for establishing a connection to an Oracle database.
 
-- **src/PartTable.java**  
-  Inherits from `Table` and implements specific operations for the part table, including table creation and loading part data.
+- **src/cuhk.com.SQL_SoonQuitLife.csci3170.cse.PartTable.java**  
+  Inherits from `cuhk.com.SQL_SoonQuitLife.csci3170.cse.Table` and implements specific operations for the part table, including table creation and loading part data.
 
-- **src/Salesperson.java**  
-  Inherits from `User` and implements the salesperson's operations menu, including searching for parts and selling parts.
+- **src/cuhk.com.SQL_SoonQuitLife.csci3170.cse.Salesperson.java**  
+  Inherits from `cuhk.com.SQL_SoonQuitLife.csci3170.cse.User` and implements the salesperson's operations menu, including searching for parts and selling parts.
 
-- **src/SalespersonTable.java**  
-  Inherits from `Table` and implements specific operations for the salesperson table, including table creation and loading salesperson data.
+- **src/cuhk.com.SQL_SoonQuitLife.csci3170.cse.SalespersonTable.java**  
+  Inherits from `cuhk.com.SQL_SoonQuitLife.csci3170.cse.Table` and implements specific operations for the salesperson table, including table creation and loading salesperson data.
 
 - **src/run.bat**  
-  A batch file that automates the compilation and execution of the Java application. It compiles all Java source files in the `src` directory and then runs the `Main` class, providing a simple way to start the application without manually entering commands.
+  A batch file that automates the compilation and execution of the Java application. It compiles all Java source files in the `src` directory and then runs the `cuhk.com.SQL_SoonQuitLife.csci3170.cse.Main` class, providing a simple way to start the application without manually entering commands.
 
 ## Group Members
 - **Tam Yiu Hei**  
