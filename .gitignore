@@ -23,4 +23,10 @@
 hs_err_pid*
 replay_pid*
 
+# intelliJ associated files
+.idea/
+
+# compiled target file
+target/
+
 !/lib/ojdbc8.jar
