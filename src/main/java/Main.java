@@ -37,7 +37,7 @@ public class Main {
             }
         } catch (Exception e) {
             System.out.println("Program terminated with an error. Check stack trace!");
-            e.printStackTrace(); // FIXME: remove after debug
+//            e.printStackTrace();
         }
     }
 } 

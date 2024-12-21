@@ -49,7 +49,7 @@ public abstract class Table {
     }
 
     public void loadTable() throws SQLException {
-        System.out.println("Loading " + tableName + "..."); //FIXME: remove after debug
+//        System.out.println("Loading " + tableName + "...");
         conn.createStatement().executeUpdate("DELETE FROM " + tableName);
     }
 
