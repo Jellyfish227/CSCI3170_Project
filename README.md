@@ -6,7 +6,7 @@ This repository contains academic work and is published for record and reference
 All project specifications and related course materials are the intellectual property of The Chinese University of Hong Kong. I do not own or claim any copyright over these materials. They are provided for reference only.
 
 ## Project Overview
-The project is designed to implement a comprehensive sales management application for a computer parts store. This project requires the development of a Java command-line application that utilizes the Java JDBC API for database interactions with an Oracle Database (version 19c). The system will handle transactions, manage computer parts, and maintain salespersons' information while supporting interactive user queries. The project involves designing a relational database schema based on a provided ER diagram, loading data from text files, and implementing various functionalities for administrators, salespersons, and managers.
+The project is designed to implement a comprehensive sales management application for a computer parts store. This project involves developing a Java command-line application that utilizes the Java JDBC API for interactions with an Oracle Database. The system will manage transactions, computer parts, and salespersons' information while supporting interactive user queries. Key components of the project include designing a relational database schema based on a provided ER diagram, loading data from text files, and implementing various functionalities for administrators, salespersons, and managers.
 
 ## Group Information
 **Group Number**: 4
