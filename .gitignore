@@ -30,3 +30,4 @@ replay_pid*
 target/
 
 !/lib/**
+!Project-1.0-RELEASE.jar
