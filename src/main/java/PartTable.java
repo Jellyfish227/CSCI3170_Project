@@ -153,7 +153,7 @@ public class PartTable extends Table {
     }
 
     public void queryPartTable(int criterion, String keyword, int ordering) {
-        @SuppressWarnings("SqlType")
+//        @SuppressWarnings("SqlType")
         String sql =
                 "SELECT p.pID as ID, p.pName as Name, m.mName as Manufacturer, "
                         + "c.cName as Category, p.pAvailableQuantity as Quantity, "
@@ -161,7 +161,7 @@ public class PartTable extends Table {
                         + "FROM " + getTableName() + " p "
                         + "JOIN " + ManufacturerTable.getTableIdentifier() + " m ON p.mID = m.mID "
                         + "JOIN " + CategoryTable.getTableIdentifier() + " c ON p.cID = c.cID "
-                        + "WHERE " + (criterion == 1 ? "LOWER(p.pName)" : "LOWER(m.mName)")
+                        + "WHERE " + (criterion == 1 ? "p.pName" : "m.mName")
                         + " LIKE (?) "
                         + "ORDER BY p.pPrice "
                         + (ordering == 1 ? "ASC" : "DESC");
