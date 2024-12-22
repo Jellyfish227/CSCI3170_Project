@@ -82,6 +82,8 @@ The project is to implement a comprehensive sales management application for a c
     .
     . (Other files)
     .
+    ├── DemoVid.mp4 <-----demo video
+    │
     ├── mvnw        <-----portable maven for Unix
     │
     └── mvnw.cmd    <-----portable maven for Windows
@@ -166,18 +168,18 @@ The project is to implement a comprehensive sales management application for a c
 
 - **Java Environment**: Please ensure you have the Java Development Kit (JDK) or Java Runtime Environment (JRE) of version 17 or newer installed on your machine and added to the system environment variables. You can download it from the [Oracle website](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html). 
   - To check if you have the Java environment, you can use the following command:
-    ```bash
+    ```sh
     java -version
     ```
 
 - **Maven**: To ensure the portability of the project, we use [Maven](https://maven.apache.org/) to manage dependencies and compile the project so we do not need to rely on platform-dependent batch files or scripts to compile the project and we don't need to manually manage the dependencies. For the ease of use, we also provide a portable Maven wrapper for both Unix and Windows.
   - To check if the portable Maven wrapper is working, you can use the following command:
     For Unix / MacOS:
-    ```bash
+    ```sh
     ./mvnw -version
     ```
     For Windows:
-    ```pwsh
+    ```sh
     ./mvnw.cmd -version
     ```
 
@@ -191,13 +193,13 @@ The project is to implement a comprehensive sales management application for a c
 
     For Unix / MacOS:
 
-    ```bash
+    ```sh
     ./mvnw package && java -jar ./Project-1.0-RELEASE.jar
     ```
 
     For Windows:
 
-    ```pwsh
+    ```sh
     ./mvnw.cmd package && java -jar Project-1.0-RELEASE.jar
     ```
 
@@ -206,13 +208,13 @@ The project is to implement a comprehensive sales management application for a c
 
   For Unix / MacOS:
 
-  ```bash
+  ```sh
   ./mvnw clean
   ```
 
   For Windows:
 
-  ```pwsh
+  ```sh
   ./mvnw.cmd clean
   ```
 
@@ -220,13 +222,13 @@ The project is to implement a comprehensive sales management application for a c
 
   For Unix / MacOS:
 
-  ```bash
+  ```sh
   ./mvnw package
   ```
 
   For Windows:
 
-  ```pwsh
+  ```sh
   ./mvnw.cmd package
   ```
   PS: Maven actually cleans the project built artifacts when building the project, so you don't need to explicitly clean the project built artifacts before building the project.
@@ -235,6 +237,11 @@ The project is to implement a comprehensive sales management application for a c
 
   For All OS:
 
-  ```bash
+  ```sh
   java -jar ./Project-1.0-RELEASE.jar
   ```
+-------
+
+## Project History
+
+Full source code and development history available on [GitHub](https://github.com/Jellyfish227/CSCI3170_Introduction_to_DBS.git).
