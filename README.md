@@ -180,7 +180,7 @@ The project is to implement a comprehensive sales management application for a c
     ```
     For Windows:
     ```sh
-    ./mvnw.cmd -version
+    .\mvnw.cmd -version
     ```
 
 - **Network Connection**: Please ensure you have connected to the CUHK CSE VPN before running the project.
@@ -200,7 +200,7 @@ The project is to implement a comprehensive sales management application for a c
     For Windows:
 
     ```sh
-    ./mvnw.cmd package && java -jar Project-1.0-RELEASE.jar
+    .\mvnw.cmd package && java -jar Project-1.0-RELEASE.jar
     ```
 
 #### If you want to do the steps separately, you can use the following commands:
@@ -215,7 +215,7 @@ The project is to implement a comprehensive sales management application for a c
   For Windows:
 
   ```sh
-  ./mvnw.cmd clean
+  .\mvnw.cmd clean
   ```
 
 - To just build the project into a jar file `Project-1.0-RELEASE.jar`, you can use the following command:
@@ -229,7 +229,7 @@ The project is to implement a comprehensive sales management application for a c
   For Windows:
 
   ```sh
-  ./mvnw.cmd package
+  .\mvnw.cmd package
   ```
   PS: Maven actually cleans the project built artifacts when building the project, so you don't need to explicitly clean the project built artifacts before building the project.
 
